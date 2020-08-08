@@ -1,0 +1,38 @@
+{
+    "apiVersion": "appconnect.ibm.com/v1beta1",
+    "kind": "IntegrationServer",
+    "metadata": {
+        "name": "name",
+        "namespace": "namespace"
+    },
+    "spec": {
+        "barURL": "",
+        "designerFlowsOperationMode": "disabled",
+        "license": {
+            "accept": true,
+            "license": "L-AMYG-BQ2E4U",
+            "use": "AppConnectEnterpriseProduction"
+        },
+        "pod": {
+            "containers": {
+                "runtime": {
+                    "image": "image"
+                }
+            },
+            "imagePullSecrets": [
+                {
+                    "name": "all-icr-io"
+                }
+            ]
+        },
+        "replicas": 1,
+        "router": {
+            "timeout": "120s"
+        },
+        "service": {
+            "endpointType": "http"
+        },
+        "useCommonServices": false,
+        "version": "11.0.0"
+    }
+}
