@@ -10,9 +10,9 @@ cat deploy-ace.json |  jq '.metadata.name = "'${IDS_PROJECT_NAME}'-'${NAMESPACE}
 echo "DEPLOYING..."
 cat deploy-ace.json |  jq '.metadata.name = "'${IDS_PROJECT_NAME}'-'${NAMESPACE}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.pod.containers.runtime.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.replicas='${REPLICAS}'' | oc apply -f - 
 
-echo "Sleeping for ten seconds"
-sleep 10
+echo "Sleeping for a few seconds"
+sleep 3
 
 echo "deleting routes"
-oc delete route ${IDS_PROJECT_NAME}-${NAMESPACE}-http
-oc delete route ${IDS_PROJECT_NAME}-${NAMESPACE}-https
+oc -n ${NAMESPACE}  delete route ${IDS_PROJECT_NAME}-${NAMESPACE}-http
+oc -n ${NAMESPACE}  delete route ${IDS_PROJECT_NAME}-${NAMESPACE}-https
