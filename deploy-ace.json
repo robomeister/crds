@@ -32,6 +32,9 @@
         "service": {
             "endpointType": "http"
         },
+        "tracing": {
+            "enabled": false
+        },
         "useCommonServices": false,
         "version": "11.0.0"
     }
