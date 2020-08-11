@@ -30,7 +30,7 @@
             "timeout": "120s"
         },
         "service": {
-            "endpointType": "http"
+            "endpointType": "https"
         },
         "tracing": {
             "enabled": false
