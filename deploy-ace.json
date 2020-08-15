@@ -16,7 +16,17 @@
         "pod": {
             "containers": {
                 "runtime": {
-                    "image": "image"
+                    "image": "image",
+                    "resources" : {
+                        "requests" : {
+                            "cpu" : "250m",
+                            "memory" : "256Mi"
+                        },
+                        "limits" : {
+                            "cpu" : "500m",
+                            "memory" : "512Mi"
+                        }
+                    }
                 }
             },
             "imagePullSecrets": [
