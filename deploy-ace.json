@@ -2,11 +2,17 @@
     "apiVersion": "appconnect.ibm.com/v1beta1",
     "kind": "IntegrationServer",
     "metadata": {
+        "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"appconnect.ibm.com/v1beta1\",\"kind\":\"IntegrationServer\",\"metadata\":{\"annotations\":{},\"name\":\"name\",\"namespace\":\"namespace\"},\"spec\":{\"barURL\":\"\",\"configurations\":[\"setdbparms-conf\",\"keystore1-conf\",\"keystore1-conf\"],\"designerFlowsOperationMode\":\"disabled\",\"license\":{\"accept\":true,\"license\":\"L-AMYG-BQ2E4U\",\"use\":\"AppConnectEnterpriseProduction\"},\"pod\":{\"containers\":{\"runtime\":{\"image\":\"image\",\"resources\":{\"limits\":{\"cpu\":\"500m\",\"memory\":\"512Mi\"},\"requests\":{\"cpu\":\"250m\",\"memory\":\"256Mi\"}}}},\"imagePullSecrets\":[{\"name\":\"all-icr-io\"}]},\"replicas\":1,\"router\":{\"timeout\":\"120s\"},\"service\":{\"endpointType\":\"https\"},\"tracing\":{\"enabled\":false},\"useCommonServices\":false,\"version\":\"11.0.0\"}}\n"
+        },
         "name": "name",
         "namespace": "namespace"
     },
     "spec": {
         "barURL": "",
+        "configurations": [
+            "setdbparms-conf"
+        ],
         "designerFlowsOperationMode": "disabled",
         "license": {
             "accept": true,
@@ -17,14 +23,14 @@
             "containers": {
                 "runtime": {
                     "image": "image",
-                    "resources" : {
-                        "requests" : {
-                            "cpu" : "250m",
-                            "memory" : "256Mi"
+                    "resources": {
+                        "limits": {
+                            "cpu": "500m",
+                            "memory": "512Mi"
                         },
-                        "limits" : {
-                            "cpu" : "500m",
-                            "memory" : "512Mi"
+                        "requests": {
+                            "cpu": "250m",
+                            "memory": "256Mi"
                         }
                     }
                 }
