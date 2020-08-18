@@ -9,7 +9,9 @@
         "barURL": "",
         "configurations": [
             "setdbparms-conf",
-            "sask-health-keystore.jks"
+            "sask-health-keystore.jks",
+            "aceclient.kdb",
+            "aceclient.sth"
         ],
         "designerFlowsOperationMode": "disabled",
         "license": {
