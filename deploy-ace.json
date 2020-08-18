@@ -8,7 +8,8 @@
     "spec": {
         "barURL": "",
         "configurations": [
-            "setdbparms-conf"
+            "setdbparms-conf",
+            "sask-health-keystore.jks"
         ],
         "designerFlowsOperationMode": "disabled",
         "license": {
