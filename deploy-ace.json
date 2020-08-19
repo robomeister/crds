@@ -9,6 +9,7 @@
         "barURL": "",
         "configurations": [
             "setdbparms-conf",
+            "generic-conf",
             "sask-health-keystore.jks",
             "aceclient.kdb",
             "aceclient.sth"
