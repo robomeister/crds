@@ -5,7 +5,7 @@ echo ${NAME}
 echo ${NAMESPACE}
 echo ${PIPELINE_IMAGE_URL}
 
-wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace.json
+wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq.json
 
 cat deploy-mq.json
 
