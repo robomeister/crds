@@ -5,6 +5,10 @@ echo ${NAME}
 echo ${NAMESPACE}
 echo ${PIPELINE_IMAGE_URL}
 
+wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace.json
+
+cat deploy-mq.json
+
 cat deploy-mq.json | jq '.metadata.name = "'${NAME}'-'${NAMESPACE}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |   jq '.spec.queueManager.storage.queueManager.class="'${STORAGE_CLASS}'"' | oc apply -f - --dry-run -o yaml
 
 echo " "
