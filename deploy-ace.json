@@ -10,6 +10,7 @@
         "configurations": [
             "setdbparms-conf",
             "generic-conf",
+            "policies-conf",
             "sask-health-keystore.jks",
             "aceclient.kdb",
             "aceclient.sth"
