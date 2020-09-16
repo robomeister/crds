@@ -1,5 +1,7 @@
 #!/bin/bash
 
+env
+
 wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace.json
 
 cat deploy-ace.json
