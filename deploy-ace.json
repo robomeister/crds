@@ -12,6 +12,7 @@
             "generic-conf",
             "policies-conf",
             "sask-health-keystore.jks",
+            "truststore.jks",
             "aceclient.kdb",
             "aceclient.sth"
         ],
