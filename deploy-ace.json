@@ -26,7 +26,7 @@
             "containers": {
                 "runtime": {
                     "livenessProbe" : {
-                        "initialDelaySeconds": "900"  
+                        "initialDelaySeconds": 900
                     },
                     "image": "image",
                     "resources": {
