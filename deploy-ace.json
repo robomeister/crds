@@ -25,6 +25,9 @@
         "pod": {
             "containers": {
                 "runtime": {
+                    "livenessProbe" : {
+                        "initialDelaySeconds": "900"  
+                    },
                     "image": "image",
                     "resources": {
                         "limits": {
