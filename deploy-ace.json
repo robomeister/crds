@@ -19,7 +19,7 @@
         "designerFlowsOperationMode": "disabled",
         "license": {
             "accept": true,
-            "license": "L-AMYG-BQ2E4U",
+            "license": "L-APEH-BPUCJK",
             "use": "AppConnectEnterpriseProduction"
         },
         "pod": {
@@ -58,6 +58,6 @@
             "enabled": false
         },
         "useCommonServices": false,
-        "version": "11.0.0.9-r3"
+        "version": "11.0.0.10-r1"
     }
 }
