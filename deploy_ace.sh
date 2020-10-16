@@ -13,10 +13,11 @@ then
       echo "\$SERVERCONF is not set"
 else
       echo "TEST"
-      cat deploy-ace.json | jq '.spec.configurations += ["'${SERVERCONF}'"]' 
+      cat deploy-ace.json | jq '.spec.configurations += ["'${SERVERCONF}'"]' > new-deploy.json
       echo "DONE TEST"
 fi
 
+cat new-deploy.json
 
 echo "DRY RUN..."
 cat deploy-ace.json |  jq '.metadata.name = "'${NAMESPACE}'-'${IDS_PROJECT_NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.pod.containers.runtime.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.replicas='${REPLICAS}'' | oc apply -f - --dry-run -o yaml
