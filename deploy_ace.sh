@@ -23,7 +23,7 @@ if [[ -z ${MAX_CPU} ]];
 then
       cp deploy-conf.json deploy-cpu.json
 else
-      cat deploy-conf.json | jq '.spec.pod.containers.runtime.resources.limits.cpu="${MAX_CPU}"' > deploy-cpu.json
+      cat deploy-conf.json | jq '.spec.pod.containers.runtime.resources.limits.cpu="'${MAX_CPU}'"' > deploy-cpu.json
 fi
 
 echo "CPU"
@@ -33,7 +33,7 @@ if [[ -z ${MAX_MEMORY} ]];
 then
       cp deploy-cpu.json deploy-mem.json
 else
-      cat deploy-cpu.json | jq '.spec.pod.containers.runtime.resources.limits.memory="${MAX_MEMORY}"' > deploy-mem.json
+      cat deploy-cpu.json | jq '.spec.pod.containers.runtime.resources.limits.memory="'${MAX_MEMORY}'"' > deploy-mem.json
 fi
 
 echo "MEMORY"
