@@ -16,14 +16,15 @@ fi
 wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace.json
 wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-prod.json
 
-echo "Using default non-prod deployment json"
-cp deploy-ace.json deploy.json
-
 case $NAMESPACE in
   *"pt"*|*"prod"*|*"dr"*)
-    echo "Switching to PRODUCTION deployment json"
+    echo "Using PRODUCTION deployment json"
     cp deploy-ace-prod.json deploy.json
     ;;
+  *)
+    echo "Using non-prod deployment json"
+    cp deploy-ace.json deploy.json
+    ;;    
 esac
 
 cat deploy.json
