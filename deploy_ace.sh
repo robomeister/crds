@@ -8,7 +8,7 @@ cat deploy-ace.json
 
 
 
-if [[ -z "${SERVERCONF}" ]];
+if [[ -z ${SERVERCONF} ]];
 then
       echo "\$SERVERCONF is empty"
 else
