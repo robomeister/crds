@@ -73,3 +73,18 @@ oc apply -f deployment.json --dry-run -o yaml
 
 echo "DEPLOYING..."
 oc apply -f deployment.json
+
+DEPLOYMENT_NAME=${NAMESPACE}-${IDS_PROJECT_NAME}-is
+
+set -x
+if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --timeout=${ROLLOUT_TIMEOUT:-"150s"} --namespace ${NAMESPACE}; then
+  STATUS="pass"
+else
+  STATUS="fail"
+fi
+set +x
+
+if [ "$STATUS" == "fail" ]; then
+  echo "DEPLOYMENT FAILED"
+  exit 1
+fi
