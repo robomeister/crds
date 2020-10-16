@@ -15,8 +15,7 @@
             "sask-health-keystore.jks",
             "truststore.jks",
             "aceclient.kdb",
-            "aceclient.sth",
-            "server-conf"
+            "aceclient.sth"
         ],
         "designerFlowsOperationMode": "disabled",
         "license": {
