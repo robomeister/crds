@@ -6,7 +6,6 @@ wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace.json
 wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-prod.json
 
 case $NAMESPACE in
-
   *"dev"*)
     echo "Using non-prod deployment json"
     cp deploy-ace.json deploy.json
