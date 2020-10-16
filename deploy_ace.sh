@@ -12,9 +12,7 @@ if [[ -z ${SERVERCONF} ]];
 then
       cp deploy-ace.json deploy-conf.json
 else
-      echo "TEST"
       cat deploy-ace.json | jq '.spec.configurations += ["'${SERVERCONF}'"]' > deploy-conf.json
-      echo "DONE TEST"
 fi
 
 
