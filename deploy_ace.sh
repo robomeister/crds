@@ -12,7 +12,7 @@ if [ ! -z "${SERVERCONF}" ];
 then
       echo "\$SERVERCONF is empty"
 else
-      echo "\$SERVERCONF is NOT empty ${SERVERCONF}"
+      echo "\$SERVERCONF is NOT empty [${SERVERCONF}]"
 fi
 
 echo "DRY RUN..."
