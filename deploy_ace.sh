@@ -10,9 +10,14 @@ cat deploy-ace.json
 
 if [[ -z ${SERVERCONF} ]];
 then
-      echo "\$SERVERCONF is empty"
+      echo "\$SERVERCONF is not set"
 else
-      echo "\$SERVERCONF is NOT empty [${SERVERCONF}]"
+      if [[ $SERVERCONF == true ]];
+      then
+          echo "is NOT empty [${SERVERCONF}]"
+      else
+          echo "DON'T HAVE IT"
+      fi
 fi
 
 echo "DRY RUN..."
