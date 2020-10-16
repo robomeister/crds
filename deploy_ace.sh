@@ -10,20 +10,19 @@ cat deploy-ace.json
 
 if [[ -z ${SERVERCONF} ]];
 then
-      echo "\$SERVERCONF is not set"
+      cp deploy-ace.json deploy-conf.json
 else
       echo "TEST"
-      cat deploy-ace.json | jq '.spec.configurations += ["'${SERVERCONF}'"]' > new-deploy.json
+      cat deploy-ace.json | jq '.spec.configurations += ["'${SERVERCONF}'"]' > deploy-conf.json
       echo "DONE TEST"
 fi
 
-cat new-deploy.json
 
 echo "DRY RUN..."
-cat deploy-ace.json |  jq '.metadata.name = "'${NAMESPACE}'-'${IDS_PROJECT_NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.pod.containers.runtime.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.replicas='${REPLICAS}'' | oc apply -f - --dry-run -o yaml
+cat deploy-conf.json |  jq '.metadata.name = "'${NAMESPACE}'-'${IDS_PROJECT_NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.pod.containers.runtime.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.replicas='${REPLICAS}'' | oc apply -f - --dry-run -o yaml
 
 echo "DEPLOYING..."
-cat deploy-ace.json |  jq '.metadata.name = "'${NAMESPACE}'-'${IDS_PROJECT_NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.pod.containers.runtime.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.replicas='${REPLICAS}'' | oc apply -f - 
+cat deploy-conf.json |  jq '.metadata.name = "'${NAMESPACE}'-'${IDS_PROJECT_NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.pod.containers.runtime.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.replicas='${REPLICAS}'' | oc apply -f - 
 
 #echo "Sleeping for several seconds"
 #sleep 15
