@@ -31,14 +31,14 @@ if [[ -z ${MIN_CPU} ]];
 then
       cp  deploy-max-mem.json deploy-min-cpu.json
 else
-      cat deploy-max-mem.json | jq '.spec.pod.containers.runtime.resources.limits.cpu="'${MIN_CPU}'"' > deploy-min-cpu.json
+      cat deploy-max-mem.json | jq '.spec.pod.containers.runtime.resources.requests.cpu="'${MIN_CPU}'"' > deploy-min-cpu.json
 fi
 
 if [[ -z ${MIN_MEMORY} ]];
 then
       cp  deploy-min-cpu.json deploy-min-mem.json
 else
-      cat deploy-min-cpu.json | jq '.spec.pod.containers.runtime.resources.limits.memory="'${MIN_MEMORY}'"' > deploy-min-mem.json
+      cat deploy-min-cpu.json | jq '.spec.pod.containers.runtime.resources.requests.memory="'${MIN_MEMORY}'"' > deploy-min-mem.json
 fi
 
 echo "DRY RUN..."
