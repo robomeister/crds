@@ -77,7 +77,7 @@ oc apply -f deployment.json
 DEPLOYMENT_NAME=${NAMESPACE}-${IDS_PROJECT_NAME}-is
 
 set -x
-if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --timeout=${ROLLOUT_TIMEOUT:-"150s"} --namespace ${NAMESPACE}; then
+if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="120s" --namespace ${NAMESPACE}; then
   STATUS="pass"
 else
   STATUS="fail"
