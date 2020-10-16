@@ -6,6 +6,15 @@ wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace.json
 
 cat deploy-ace.json
 
+
+
+if [ ! -z "$SERVERCONF" ];
+then
+      echo "\$SERVERCONF is empty"
+else
+      echo "\$SERVERCONF is NOT empty"
+fi
+
 echo "DRY RUN..."
 cat deploy-ace.json |  jq '.metadata.name = "'${NAMESPACE}'-'${IDS_PROJECT_NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.pod.containers.runtime.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.replicas='${REPLICAS}'' | oc apply -f - --dry-run -o yaml
 
