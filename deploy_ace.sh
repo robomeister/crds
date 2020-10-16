@@ -74,7 +74,7 @@ oc apply -f deployment.json --dry-run -o yaml
 echo "DEPLOYING..."
 oc apply -f deployment.json
 
-sleep 5
+sleep 10s
 
 DEPLOYMENT_NAME=${NAMESPACE}-${IDS_PROJECT_NAME}-is
 
