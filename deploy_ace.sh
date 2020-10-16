@@ -31,6 +31,11 @@ case $NAMESPACE in
     echo "Using prod deployment json"
     cp deploy-ace-prod.json deploy.json
     ;;
+    
+  *"dr"*)
+    echo "Using prod deployment json"
+    cp deploy-ace-prod.json deploy.json
+    ;;    
 esac
 
 cat deploy.json
