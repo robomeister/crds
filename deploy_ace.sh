@@ -2,6 +2,17 @@
 
 env
 
+if [[ -z ${NAMESPACE} ]];
+then
+   echo "Please set the NAMESPACE environment variable"
+   exit 1
+fi
+
+if [[ -z ${REPLICAS} ]];
+then
+   REPLICAS=1
+fi
+
 wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace.json
 wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-prod.json
 
