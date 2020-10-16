@@ -21,7 +21,7 @@ cp deploy-ace.json deploy.json
 
 case $NAMESPACE in
   *"pt"*|*"prod"*|*"dr"*)
-    echo "Switching to production deployment json"
+    echo "Switching to PRODUCTION deployment json"
     cp deploy-ace-prod.json deploy.json
     ;;
 esac
