@@ -6,35 +6,15 @@ wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace.json
 wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-prod.json
 
 case $NAMESPACE in
-  *"dev"*)
+  *"dev"*|*"sit"*|*"uat"*)
     echo "Using non-prod deployment json"
     cp deploy-ace.json deploy.json
     ;;
 
-  *"sit"*)
-    echo "Using non-prod deployment json"
-    cp deploy-ace.json deploy.json
-    ;;
-
-  *"uat"*)
-    echo "Using non-prod deployment json"
-    cp deploy-ace.json deploy.json
-    ;;
-
-  *"pt"*)
+  *"pt"*|*"prod"*|*"dr"*)
     echo "Using prod deployment json"
     cp deploy-ace-prod.json deploy.json
     ;;
-
-  *"prod"*)
-    echo "Using prod deployment json"
-    cp deploy-ace-prod.json deploy.json
-    ;;
-    
-  *"dr"*)
-    echo "Using prod deployment json"
-    cp deploy-ace-prod.json deploy.json
-    ;;    
 esac
 
 cat deploy.json
