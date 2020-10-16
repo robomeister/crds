@@ -12,7 +12,7 @@ if [[ -z ${SERVERCONF} ]];
 then
       echo "\$SERVERCONF is not set"
 else
-      cat deploy-ace.json | jq '.spec.configurations += [${SERVERCONF}]' > deploy-ace.json
+      cat deploy-ace.json | jq '.spec.configurations += ['${SERVERCONF}']' > deploy-ace.json
 fi
 
 cat deploy-ace.json
