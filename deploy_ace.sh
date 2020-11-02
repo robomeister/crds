@@ -89,3 +89,11 @@ if [ "$STATUS" == "fail" ]; then
   echo "DEPLOYMENT FAILED"
   exit 1
 fi
+
+if [[ -z ${MATCH_SELECTOR} ]];
+then
+   echo "No Match Selector Specified"
+else
+   oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json | jq '.spec.selector.matchLabels.'${MATCH_SELECTOR}'=true | .metadata.labels.'${MATCH_SELECTOR}'=true' | oc -n ${NAMESPACE} apply -f -
+fi
+
