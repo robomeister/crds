@@ -17,6 +17,10 @@
             "aceclient.kdb",
             "aceclient.sth"
         ],
+        "labels":
+        {
+            "roboIn": "Y"
+        }
         "designerFlowsOperationMode": "disabled",
         "license": {
             "accept": true,
