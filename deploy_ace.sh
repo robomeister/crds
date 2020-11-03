@@ -88,13 +88,23 @@ set +x
 if [ "$STATUS" == "fail" ]; then
   echo "DEPLOYMENT FAILED"
   exit 1
-fi
-
-if [[ -z ${MATCH_SELECTOR} ]];
-then
-   echo "No Match Selector Specified"
 else
-   echo "Re-applying the deployment..."
-   oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json | jq '.spec.selector.matchLabels.'${MATCH_SELECTOR}'="true" | .metadata.labels.'${MATCH_SELECTOR}'="true" | .spec.template.metadata.labels.'${MATCH_SELECTOR}'="true"' | oc -n ${NAMESPACE} replace --force -f -
+   if [[ -z ${MATCH_SELECTOR} ]];
+   then
+      echo "No Match Selector Specified"
+   else
+      echo "Re-applying the deployment..."
+      oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json | jq '.spec.selector.matchLabels.'${MATCH_SELECTOR}'="true" | .metadata.labels.'${MATCH_SELECTOR}'="true" | .spec.template.metadata.labels.'${MATCH_SELECTOR}'="true"' | oc -n ${NAMESPACE} replace --force -f -
+      set -x
+      if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="300s" --namespace ${NAMESPACE}; then
+        STATUS="pass"
+      else
+        STATUS="fail"
+      fi
+      set +x
+      if [ "$STATUS" == "fail" ]; then
+        echo "DEPLOYMENT FAILED"
+        exit 1
+      fi
+   fi
 fi
-
