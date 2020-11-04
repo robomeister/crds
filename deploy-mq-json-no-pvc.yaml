@@ -1,1 +1,66 @@
-
+{
+    "apiVersion": "mq.ibm.com/v1beta1",
+    "kind": "QueueManager",
+    "metadata": {
+        "name": "name",
+        "namespace": "namespace"
+    },
+    "spec": {
+        "imagePullSecrets": [ { "name": "all-icr-io" } ],
+        "license": {
+            "accept": true,
+            "license": "L-RJON-BN7PN3",
+            "metric": "VirtualProcessorCore",
+            "use": "Production"
+        },
+        "queueManager": {
+            "availability": {
+                "type": "SingleInstance"
+            },
+            "image": "image",
+            "imagePullPolicy": "IfNotPresent",
+            "metrics": {
+                "enabled": false
+            },
+            "name": "QM1",
+            "resources": {
+                "limits": {
+                    "cpu": "500m",
+                    "memory": "512Mi"
+                },
+                "requests": {
+                    "cpu": "250m",
+                    "memory": "256Mi"
+                }
+            },
+            "storage": {
+                "queueManager": {
+                    "type": "ephemeral"
+                }
+            }
+        },
+        "template": {
+            "pod": {
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "MQSNOAUT",
+                                "value": "yes"
+                            }
+                        ],
+                        "name": "qmgr"
+                    }
+                ]
+            }
+        },
+        "tracing": {
+            "enabled": false,
+            "namespace" : ""
+        },
+        "version": "9.1.5.0-r2",
+        "web": {
+            "enabled": false
+        }
+    }
+}
