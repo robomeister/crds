@@ -25,12 +25,12 @@
             "name": "QM1",
             "resources": {
                 "limits": {
-                    "cpu": "1",
-                    "memory": "1024Mi"
-                },
-                "requests": {
                     "cpu": "4",
                     "memory": "4096Mi"
+                },
+                "requests": {
+                    "cpu": "1",
+                    "memory": "1024Mi"
                 }
             },
             "storage": {
