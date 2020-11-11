@@ -25,18 +25,18 @@
             "name": "QM1",
             "resources": {
                 "limits": {
-                    "cpu": "500m",
-                    "memory": "512Mi"
+                    "cpu": "1",
+                    "memory": "1024Mi"
                 },
                 "requests": {
-                    "cpu": "250m",
-                    "memory": "256Mi"
+                    "cpu": "4",
+                    "memory": "4096Mi"
                 }
             },
             "storage": {
                 "queueManager": {
-                    "class": "ibmc-block-gold",
-                    "size": "5",
+                    "class": "ibmc-file-high-iops-gid",
+                    "size": "40",
                     "type": "persistent-claim"
                 }
             }
