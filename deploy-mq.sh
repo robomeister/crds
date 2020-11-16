@@ -8,6 +8,7 @@ echo ${PIPELINE_IMAGE_URL}
 echo "wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq.json.${HOSTNAME}"
 wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq.json.${HOSTNAME}
 
+echo "cp deploy-mq.json.${HOSTNAME} deploy-mq.json"
 cp deploy-mq.json.${HOSTNAME} deploy-mq.json
 cat deploy-mq.json
 
