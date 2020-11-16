@@ -5,7 +5,8 @@ echo ${NAME}
 echo ${NAMESPACE}
 echo ${PIPELINE_IMAGE_URL}
 
-wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq.json
+echo "wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq.json?${HOSTNAME}"
+wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq.json?${HOSTNAME}
 
 cat deploy-mq.json
 
