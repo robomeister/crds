@@ -36,7 +36,7 @@
             "storage": {
                 "queueManager": {
                     "class": "ibmc-file-high-iops-gid",
-                    "size": "40",
+                    "size": "40Gi",
                     "type": "persistent-claim"
                 }
             }
