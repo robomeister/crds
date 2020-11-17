@@ -34,7 +34,7 @@ fi
 
 if [[ -z ${QMGR_NAME} ]];
 then
-   # use default qmgr name QM1
+   echo "Using default QM name QM1"
 else
    # use qmgr name provided
    echo "cat deploy-mq.json | jq '.metadata.name = '${NAMESPACE}'-'${NAME}'' | jq '.metadata.namespace = '${NAMESPACE}'' | jq '.spec.queueManager.image='${PIPELINE_IMAGE_URL}'' |  jq '.spec.queueManager.name='${QMGR_NAME}'' | oc apply -f - "
