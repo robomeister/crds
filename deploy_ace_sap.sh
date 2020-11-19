@@ -74,13 +74,28 @@ else
       cat deploy5.json | jq '.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions += [{"key":"workernode","operator":"In", "values":["'${WORKER_NODE}'"]}]' > deploy6.json
 fi
 
-cat deploy6.json |  jq '.metadata.name = "'${NAMESPACE}'-'${IDS_PROJECT_NAME}'" | .metadata.namespace = "'${NAMESPACE}'" | .spec.pod.containers.runtime.image="'${PIPELINE_IMAGE_URL}'" | .spec.replicas='${REPLICAS}'' > deployment.json
+cat deploy6.json |  jq '.metadata.name = "'${NAMESPACE}'-'${IDS_PROJECT_NAME}'" | .metadata.namespace = "'${NAMESPACE}'" | .spec.pod.containers.runtime.image="'${PIPELINE_IMAGE_URL}'" | .spec.replicas='${REPLICAS}'' > deploy6.json
+
+if [[ -z ${POLICY_CONF} ]];
+then
+      cp  deploy6.json deploy7.json
+else
+      cat deploy6.json | jq '.spec.configurations += ["'${POLICY_CONF}'"]' > deploy7.json
+fi
+
+if [[ -z ${DBPARMS_CONF} ]];
+then
+      cp  deploy7.json deploy8.json
+else
+      cat deploy7.json | jq '.spec.configurations += ["'${DBPARMS_CONF}'"]' > deploy8.json
+fi
+
 
 echo "DRY RUN..."
-oc apply -f deployment.json --dry-run -o yaml
+oc apply -f deploy8.json --dry-run -o yaml
 
 echo "DEPLOYING..."
-oc apply -f deployment.json
+oc apply -f deploy8.json
 
 sleep 10s
 
