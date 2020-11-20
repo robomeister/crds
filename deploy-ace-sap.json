@@ -9,9 +9,6 @@
         "adminServerSecure" : false,
         "barURL": "",
         "configurations": [
-            "setdbparms-conf",
-            "generic-conf",
-            "policies-conf",
             "truststore.jks",
             "aceclient.kdb",
             "aceclient.sth"
