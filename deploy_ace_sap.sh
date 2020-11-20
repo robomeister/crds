@@ -1,5 +1,6 @@
 #!/bin/bash
 # dump env
+#env
 env
 if [[ -z ${NAMESPACE} ]];
 then
@@ -18,7 +19,8 @@ rm deploy-ace-prod.json
 wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-sap.json
 wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-sap-prod.json
 
-case $NAMESPACE in
+#case $NAMESPACE in
+ case $NAMESPACE in
   *"pt"*|*"prod"*|*"dr"*)
     echo "Using PRODUCTION deployment json"
     cp deploy-ace-sap-prod.json deploy.json
