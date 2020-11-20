@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# dump env
 env
 
 if [[ -z ${NAMESPACE} ]];
