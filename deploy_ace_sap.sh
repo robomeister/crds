@@ -90,12 +90,18 @@ else
       cat deploy8.json | jq '.spec.configurations += ["'${DBPARMS_CONF}'"]' > deploy9.json
 fi
 
+if [[ -z ${GENERIC_CONF} ]];
+then
+      cp  deploy9.json deploy10.json
+else
+      cat deploy9.json | jq '.spec.configurations += ["'${GENERIC_CONF}'"]' > deploy10.json
+fi
 
 echo "DRY RUN..."
-oc apply -f deploy9.json --dry-run -o yaml
+oc apply -f deploy10.json --dry-run -o yaml
 
 echo "DEPLOYING..."
-oc apply -f deploy9.json
+oc apply -f deploy10.json
 
 sleep 10s
 
