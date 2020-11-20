@@ -1,8 +1,6 @@
 #!/bin/bash
-
 # dump env
 env
-
 if [[ -z ${NAMESPACE} ]];
 then
    echo "Please set the NAMESPACE environment variable"
