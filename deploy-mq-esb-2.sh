@@ -9,12 +9,10 @@ echo ${QMGR_NAME}
 
 rm deploy-mq-esb.json
 
-echo "wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb.json"
-wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb.json
+echo "wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb-2.json"
+wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb-2.json
 
 cat deploy-mq-esb.json
-
-
 
 echo " "
 echo "Creating JSON"
