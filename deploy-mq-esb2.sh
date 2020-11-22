@@ -10,11 +10,14 @@ echo "*** DEPLOYMENT VARS ***"
 
 rm deploy-mq-esb.json
 
-URL="https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb.json"
+#URL="https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb.json"
 
-echo "wget --no-cache --no-cookies ${URL}"
-wget --no-cache --no-cookies "https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb.jso"
-echo "**** after wget ***"
+#echo "wget --no-cache --no-cookies ${URL}"
+#wget --no-cache --no-cookies "https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb.jso"
+#echo "**** after wget ***"
+
+echo " getting json via curl"
+curl https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb.json >deploy-mq-esb.json
 
 cat deploy-mq-esb.json
 
