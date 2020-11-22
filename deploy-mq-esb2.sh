@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "DEPLOYMENT VARS"
+echo "DEPLOYMENT VARS -deploy-mq-esb2"
 echo ${NAME}
 echo ${NAMESPACE}
 echo ${PIPELINE_IMAGE_URL}
