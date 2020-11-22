@@ -13,7 +13,7 @@ rm deploy-mq-esb.json
 URL="https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb.json"
 
 echo "wget --no-cache --no-cookies ${URL}"
-wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb.json
+wget --no-cache --no-cookies "https://raw.githubusercontent.com/robomeister/crds/master/deploy-mq-esb.jso"
 echo "**** after wget ***"
 
 cat deploy-mq-esb.json
