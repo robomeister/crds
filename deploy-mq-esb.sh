@@ -47,6 +47,9 @@ else
    cat deploy-mq-esb-2.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.mqsc[0].configMap.name="'${NAME}'" | .spec.queueManager.mqsc[0].configMap.items[0]="20-'${NAME}'.mqsc"' >deploy-mq-esb-3.json
 fi
 
+echo "*** customized/deployable json is as follows ***"
+cat deploy-mq-esb-3.json
+
 echo "deploying - dry run"
 cat deploy-mq-esb-3.json | oc apply -f - --dry-run -o yaml 
 
