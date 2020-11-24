@@ -111,7 +111,7 @@ then
       echo "no generic configuration applied"
       cp  deploy9.json deploy10.json
 else
-      echo "adding generic-conf: ${DGENERIC_CONF}" 
+      echo "adding generic-conf: ${GENERIC_CONF}" 
       cat deploy9.json | jq '.spec.configurations += ["'${GENERIC_CONF}'"]' > deploy10.json
 fi
 
