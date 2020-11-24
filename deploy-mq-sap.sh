@@ -47,9 +47,9 @@ else
 fi
 
 echo "final json created "
-echo ">>>"
+echo "*** start of json to deploy  ***"
 cat deploy-mq-sap-3.json
-echo "<<<"
+echo "*** end of json to deploy ***"
 echo "deploying - dry run"
 cat deploy-mq-sap-3.json | oc apply -f - --dry-run -o yaml 
 
