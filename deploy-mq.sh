@@ -44,13 +44,13 @@ then
 else
 	if [[ -z ${SECONDARY_NODE} ]];
 	then
-	   
 	   echo "Please set both PRIMARY_NODE and SECONDARY_NODE environment variables"
 	   exit 1
 	else
 	   echo "Setting spec.affinity.nodeAffinity"
 	   cat deploy-mq-1.json | jq '.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions += [{"key":"workernode","operator":"In", "values":["'${PRIMARY_NODE}'","'${SECONDARY_NODE}'"]}]' > deploy-mq-2.json
 	   cat deploy-mq-2.json | jq '.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].matchExpressions += [{"key":"workernode","operator":"In", "values":["'${PRIMARY_NODE}'"]}]' > deploy-mq-3.json
+	fi   
 fi
 
 echo " "
