@@ -30,7 +30,7 @@ if [[ -z ${PRIMARY_NODE} ]];
 then
    
    echo "Not assigning qmgr to specific worker node"
-   cat deploy-mq-1.json > deploy-mq-3.json
+   cat deploy-mq-1.json > deploy-mq-4.json
    
 else
 	echo "Primary node assignd, checking for secondary"
@@ -42,22 +42,23 @@ else
 	else
 	   echo "Setting spec.affinity.nodeAffinity"
 	   cat deploy-mq-1.json | jq '.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions += [{"key":"workernode","operator":"In", "values":["'${PRIMARY_NODE}'","'${SECONDARY_NODE}'"]}]' > deploy-mq-2.json
-	   cat deploy-mq-2.json | jq '.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].matchExpressions += [{"key":"workernode","operator":"In", "values":["'${PRIMARY_NODE}'"]}]' > deploy-mq-3.json
+	   cat deploy-mq-2.json | jq '.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].preference.matchExpressions += [{"key":"workernode","operator":"In", "values":["'${PRIMARY_NODE}'"]}]' > deploy-mq-3.json
+	   cat deploy-mq-3.json | jq '.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].weight= 1' > deploy-mq-4.json
 	fi   
 fi
 
 echo " "
 echo "Deploying following json"
-cat deploy-mq-3.json
+cat deploy-mq-4.json
 echo " "
 echo "Deploy dry Run"
 
-oc apply -f deploy-mq-3.json --dry-run -o yaml 
+oc apply -f deploy-mq-4.json --dry-run -o yaml 
  
 echo " "
 echo "Deploying..."
 
-oc apply -f deploy-mq-3.json -o yaml 
+oc apply -f deploy-mq-4.json -o yaml 
 
 #echo "wait a few seconds for service to create"
 #sleep 30
