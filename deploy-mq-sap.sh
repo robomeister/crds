@@ -6,6 +6,8 @@ echo ${NAMESPACE}
 echo ${PIPELINE_IMAGE_URL}
 echo ${EPHEMERAL}
 echo ${QMGR_NAME}
+echo ${PRIMARY_NODE}
+echo ${SECONDARY_NODE}
 
 rm deploy-mq-sap.json
 
