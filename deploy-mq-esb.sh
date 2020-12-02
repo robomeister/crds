@@ -69,13 +69,13 @@ else
 fi
 
 echo "*** customized/deployable json is as follows ***"
-cat deploy-mq-esb-3.json
+cat deploy-mq-esb-6.json
 
 echo "deploying - dry run"
-cat deploy-mq-esb-3.json | oc apply -f - --dry-run -o yaml 
+cat deploy-mq-esb-6.json | oc apply -f - --dry-run -o yaml 
 
 echo "deploying"
-cat deploy-mq-esb-3.json | oc apply -f -  
+cat deploy-mq-esb-6.json | oc apply -f -  
 
 echo "wait a few seconds for service to create"
 sleep 9
