@@ -47,6 +47,27 @@ else
    cat deploy-mq-esb-2.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.mqsc[0].configMap.name="'${NAME}'" | .spec.queueManager.mqsc[0].configMap.items[0]="20-'${NAME}'.mqsc"' >deploy-mq-esb-3.json
 fi
 
+if [[ -z ${PRIMARY_NODE} ]];
+then
+   
+   echo "Not assigning qmgr to specific worker node"
+   cat deploy-mq-esb-3.json > deploy-mq-esb-6.json
+   
+else
+	echo "Primary node assignd, checking for secondary"
+
+	if [[ -z ${SECONDARY_NODE} ]];
+	then
+	   echo "Please set both PRIMARY_NODE and SECONDARY_NODE environment variables"
+	   exit 1
+	else
+	   echo "Setting spec.affinity.nodeAffinity"
+	   cat deploy-mq-esb-3.json | jq '.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions += [{"key":"workernode","operator":"In", "values":["'${PRIMARY_NODE}'","'${SECONDARY_NODE}'"]}]' > deploy-mq-esb-4.json
+	   cat deploy-mq-esb-4.json | jq '.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].preference.matchExpressions += [{"key":"workernode","operator":"In", "values":["'${PRIMARY_NODE}'"]}]' > deploy-mq-esb-5.json
+	   cat deploy-mq-esb-5.json | jq '.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].weight= 1' > deploy-mq-esb-6.json
+	fi   
+fi
+
 echo "*** customized/deployable json is as follows ***"
 cat deploy-mq-esb-3.json
 

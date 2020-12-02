@@ -52,7 +52,7 @@ if [[ -z ${PRIMARY_NODE} ]];
 then
    
    echo "Not assigning qmgr to specific worker node"
-   cat deploy-mq-1.json > deploy-mq-4.json
+   cat deploy-mq-sap-3.json > deploy-mq-sap-6.json
    
 else
 	echo "Primary node assignd, checking for secondary"
