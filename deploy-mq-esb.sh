@@ -68,14 +68,42 @@ else
 	fi   
 fi
 
+if [[ -z ${MAX_CPU} ]];
+then
+      cp  deploy-mq-esb-6.json deploy-mq-esb-7.json
+else
+      cat deploy-mq-esb-6.json | jq '.spec.queueManager.resources.limits.cpu="'${MAX_CPU}'"' > deploy-mq-esb-7.json
+fi
+
+if [[ -z ${MAX_MEMORY} ]];
+then
+      cp  deploy-mq-esb-7.json deploy-mq-esb-8.json
+else
+      cat deploy-mq-esb-7.json | jq '.spec.queueManager.resources.limits.memory="'${MAX_MEMORY}'"' > deploy-mq-esb-8.json
+fi
+
+if [[ -z ${MIN_CPU} ]];
+then
+      cp  deploy-mq-esb-8.json deploy-mq-esb-9.json
+else
+      cat deploy-mq-esb-8.json | jq '.spec.queueManager.resources.requests.cpu="'${MIN_CPU}'"' > deploy-mq-esb-9.json
+fi
+
+if [[ -z ${MIN_MEMORY} ]];
+then
+      cp  deploy-mq-esb-9.json deploy-mq-esb-10.json
+else
+      cat deploy-mq-esb-9.json | jq '.spec.queueManager.resources.requests.memory="'${MIN_MEMORY}'"' > deploy-mq-esb-10.json
+fi
+
 echo "*** customized/deployable json is as follows ***"
-cat deploy-mq-esb-6.json
+cat deploy-mq-esb-10.json
 
 echo "deploying - dry run"
-cat deploy-mq-esb-6.json | oc apply -f - --dry-run -o yaml 
+cat deploy-mq-esb-10.json | oc apply -f - --dry-run -o yaml 
 
 echo "deploying"
-cat deploy-mq-esb-6.json | oc apply -f -  
+cat deploy-mq-esb-10.json | oc apply -f -  
 
 echo "wait a few seconds for service to create"
 sleep 9
