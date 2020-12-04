@@ -94,9 +94,9 @@ fi
 
 if [[ -z ${MIN_MEMORY} ]];
 then
-      echo "Setting min memory to: ${MIN_MEMORY}"
       cp  deploy-mq-esb-9.json deploy-mq-esb-10.json
 else
+      echo "Setting min memory to: ${MIN_MEMORY}"
       cat deploy-mq-esb-9.json | jq '.spec.queueManager.resources.requests.memory="'${MIN_MEMORY}'"' > deploy-mq-esb-10.json
 fi
 
@@ -104,10 +104,10 @@ echo "*** customized/deployable json is as follows ***"
 cat deploy-mq-esb-10.json
 
 echo "deploying - dry run"
-cat deploy-mq-esb-10.json | oc apply -f - --dry-run -o yaml 
+oc apply -f deploy-mq-esb-10.json --dry-run -o yaml 
 
 echo "deploying"
-cat deploy-mq-esb-10.json | oc apply -f -  
+oc apply -f deploy-mq-esb-10.json 
 
 echo "wait a few seconds for service to create"
 sleep 9
