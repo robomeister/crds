@@ -70,8 +70,9 @@ fi
 
 if [[ -z ${MAX_CPU} ]];
 then
-      cp  deploy-mq-esb-6.json deploy-mq-esb-7.json
+	  cp  deploy-mq-esb-6.json deploy-mq-esb-7.json
 else
+      echo "Setting max cpu to: ${MAX_CPU}"
       cat deploy-mq-esb-6.json | jq '.spec.queueManager.resources.limits.cpu="'${MAX_CPU}'"' > deploy-mq-esb-7.json
 fi
 
@@ -79,6 +80,7 @@ if [[ -z ${MAX_MEMORY} ]];
 then
       cp  deploy-mq-esb-7.json deploy-mq-esb-8.json
 else
+      echo "Setting max memory to: ${MAX_MEMORY}"
       cat deploy-mq-esb-7.json | jq '.spec.queueManager.resources.limits.memory="'${MAX_MEMORY}'"' > deploy-mq-esb-8.json
 fi
 
@@ -86,11 +88,13 @@ if [[ -z ${MIN_CPU} ]];
 then
       cp  deploy-mq-esb-8.json deploy-mq-esb-9.json
 else
+      echo "Setting min cpu to: ${MIN_CPU}"
       cat deploy-mq-esb-8.json | jq '.spec.queueManager.resources.requests.cpu="'${MIN_CPU}'"' > deploy-mq-esb-9.json
 fi
 
 if [[ -z ${MIN_MEMORY} ]];
 then
+      echo "Setting min memory to: ${MIN_MEMORY}"
       cp  deploy-mq-esb-9.json deploy-mq-esb-10.json
 else
       cat deploy-mq-esb-9.json | jq '.spec.queueManager.resources.requests.memory="'${MIN_MEMORY}'"' > deploy-mq-esb-10.json
