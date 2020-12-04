@@ -71,20 +71,44 @@ else
 	fi   
 fi
 
+if [[ -z ${MAX_CPU} ]];
+then
+	  cp  deploy-mq-tms-6.json deploy-mq-tms-7.json
+else
+      echo "Setting max cpu to: ${MAX_CPU}"
+      cat deploy-mq-tms-6.json | jq '.spec.queueManager.resources.limits.cpu="'${MAX_CPU}'"' > deploy-mq-tms-7.json
+fi
 
-echo "final json created "
-echo "*** start of json to deploy  ***"
-cat deploy-mq-tms-6.json
-echo "*** end of json to deploy ***"
+if [[ -z ${MAX_MEMORY} ]];
+then
+      cp  deploy-mq-tms-7.json deploy-mq-tms-8.json
+else
+      echo "Setting max memory to: ${MAX_MEMORY}"
+      cat deploy-mq-tms-7.json | jq '.spec.queueManager.resources.limits.memory="'${MAX_MEMORY}'"' > deploy-mq-tms-8.json
+fi
+
+if [[ -z ${MIN_CPU} ]];
+then
+      cp  deploy-mq-tms-8.json deploy-mq-tms-9.json
+else
+      echo "Setting min cpu to: ${MIN_CPU}"
+      cat deploy-mq-tms-8.json | jq '.spec.queueManager.resources.requests.cpu="'${MIN_CPU}'"' > deploy-mq-tms-9.json
+fi
+
+if [[ -z ${MIN_MEMORY} ]];
+then
+      cp  deploy-mq-tms-9.json deploy-mq-tms-10.json
+else
+      echo "Setting min memory to: ${MIN_MEMORY}"
+      cat deploy-mq-tms-9.json | jq '.spec.queueManager.resources.requests.memory="'${MIN_MEMORY}'"' > deploy-mq-tms-10.json
+fi
+
+echo "*** customized/deployable json is as follows ***"
+cat deploy-mq-tms-10.json
+
 echo "deploying - dry run"
-cat deploy-mq-tms-6.json | oc apply -f - --dry-run -o yaml 
+oc apply -f deploy-mq-tms-10.json --dry-run -o yaml 
 
 echo "deploying"
-cat deploy-mq-tms-6.json | oc apply -f -  
-
-echo "wait a few seconds for service to create"
-sleep 9
-
-#echo "oc -n ${NAMESPACE} get service ${NAMESPACE}-${NAME}-ibm-mq -o json | jq '.metadata.name = '${SERVICEHOST}'' | jq 'del(.spec.clusterIP,.metadata.resourceVersion,.metadata.creationTimestamp,.metadata.selfLink,.metadata.uid,.status)' | oc -n ${NAMESPACE} apply -f -"
-#oc -n ${NAMESPACE} get service ${NAMESPACE}-${NAME}-ibm-mq -o json | jq '.metadata.name = "'${SERVICEHOST}'"' | jq 'del(.spec.clusterIP,.metadata.resourceVersion,.metadata.creationTimestamp,.metadata.selfLink,.metadata.uid,.status)' | oc -n ${NAMESPACE} apply -f -
+oc apply -f deploy-mq-tms-10.json 
 
