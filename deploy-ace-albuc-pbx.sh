@@ -16,7 +16,7 @@ fi
 rm deploy-ace.json
 rm deploy-ace-prod.json
 
-wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-albux-pbx.json
+wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-albuc-pbx.json
 wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-albuc-pbx-prod.json
 
 case $NAMESPACE in
