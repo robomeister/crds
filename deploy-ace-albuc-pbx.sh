@@ -22,11 +22,11 @@ wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-albuc-
 case $NAMESPACE in
   *"pt"*|*"prod"*|*"dr"*)
     echo "Using PRODUCTION deployment json"
-    cp deploy-ace-prod.json deploy.json
+    cp deploy-ace-albuc-pbx-prod.json deploy.json
     ;;
   *)
     echo "Using non-prod deployment json"
-    cp deploy-ace.json deploy.json
+    cp deploy-ace-albuc-pbx.json deploy.json
     ;;    
 esac
 
