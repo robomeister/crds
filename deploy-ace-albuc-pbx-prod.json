@@ -13,7 +13,7 @@
             "generic-conf",
             "policies-conf",
             "sask-health-keystore.jks",
-            "truststore.jks",
+            "truststore-albuc-pbx.jks",
             "aceclient.kdb",
             "aceclient.sth"
         ],
@@ -32,12 +32,12 @@
                     "image": "image",
                     "resources": {
                         "limits": {
-                            "cpu": "250m",
-                            "memory": "1024Mi"
+                            "cpu": "4000m",
+                            "memory": "4096Mi"
                         },
                         "requests": {
-                            "cpu": "125m",
-                            "memory": "256Mi"
+                            "cpu": "1000m",
+                            "memory": "1024Mi"
                         }
                     }
                 }

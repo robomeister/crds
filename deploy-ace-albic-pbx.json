@@ -13,7 +13,7 @@
             "generic-conf",
             "policies-conf",
             "sask-health-keystore.jks",
-            "truststore.jks",
+            "truststore-albuc-pbx.jks",
             "aceclient.kdb",
             "aceclient.sth"
         ],
