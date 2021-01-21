@@ -11,7 +11,8 @@
         "configurations": [
             "truststore.jks",
             "aceclient.kdb",
-            "aceclient.sth"
+            "aceclient.sth",
+			"odbc.ini"
         ],
         "designerFlowsOperationMode": "disabled",
         "license": {
