@@ -20,7 +20,7 @@
             "image": "image",
             "imagePullPolicy": "IfNotPresent",
             "metrics": {
-                "enabled": false
+                "enabled": true
             },
             "name": "QM1",
             "resources": {
