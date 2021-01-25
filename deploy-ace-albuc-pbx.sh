@@ -100,20 +100,24 @@ if [ "$STATUS" == "fail" ]; then
 else
    if [[ -z ${MATCH_SELECTOR} ]];
    then
-      echo "No Match Selector Specified"
+      echo "No Match Selector Specified.  Enabling metrics..."
+      oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json | jq '.spec.template.spec.containers[0].env[1].value="true"' | oc -n ${NAMESPACE} replace --force -f -
    else
-      echo "Re-applying the deployment..."
-      oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json | jq '.spec.selector.matchLabels.'${MATCH_SELECTOR}'="true" | .metadata.labels.'${MATCH_SELECTOR}'="true" | .spec.template.metadata.labels.'${MATCH_SELECTOR}'="true"' | oc -n ${NAMESPACE} replace --force -f -
-      set -x
-      if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="300s" --namespace ${NAMESPACE}; then
-        STATUS="pass"
-      else
-        STATUS="fail"
-      fi
-      set +x
-      if [ "$STATUS" == "fail" ]; then
-        echo "DEPLOYMENT FAILED"
-        exit 1
-      fi
+      echo "Updating Match Selectors and enabling metrics..."
+      oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json | jq '.spec.template.spec.containers[0].env[1].value="true" | .spec.selector.matchLabels.'${MATCH_SELECTOR}'="true" | .metadata.labels.'${MATCH_SELECTOR}'="true" | .spec.template.metadata.labels.'${MATCH_SELECTOR}'="true"' | oc -n ${NAMESPACE} replace --force -f -
+   fi
+
+   echo "Re-applying the deployment..."
+   set -x
+   if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="300s" --namespace ${NAMESPACE}; then
+      STATUS="pass"
+   else
+     STATUS="fail"
+   fi
+   set +x
+   if [ "$STATUS" == "fail" ]; then
+     echo "DEPLOYMENT FAILED"
+     exit 1
    fi
 fi
+
