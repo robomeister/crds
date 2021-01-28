@@ -67,7 +67,7 @@ fi
 
 if [[ -z ${MIN_MEMORY} ]];
 then
-      cp  deploy-mimq-6.json deploy-mimq-7.json
+      cp deploy-mimq-6.json deploy-mimq-7.json
 else
       echo "Setting min memory to: ${MIN_MEMORY}"
       cat deploy-mimq-6.json | jq '.spec.queueManager.resources.requests.memory="'${MIN_MEMORY}'"' > deploy-mimq-7.json
