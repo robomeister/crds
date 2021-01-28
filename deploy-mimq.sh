@@ -12,12 +12,15 @@ rm deploy-mimq.json
 echo "wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mimq.json"
 wget --no-cache --no-cookies https://raw.githubusercontent.com/robomeister/crds/master/deploy-mimq.json
 
-echo "base json" 
-cat deploy-mimq.json
 echo " "
 echo "Creating modified JSON"
 
 cat deploy-mimq.json >deploy-mimq-1.json
+
+echo "base json" 
+cat deploy-mimq-1.json
+
+
 
 if [[ -z ${QMGR_NAME} ]];
 then
