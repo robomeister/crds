@@ -17,7 +17,7 @@ cat deploy-mimq.json
 echo " "
 echo "Creating modified JSON"
 
-
+cat deploy-mimq.json >deploy-mimq-1.jso
 
 if [[ -z ${QMGR_NAME} ]];
 then
