@@ -1,0 +1,121 @@
+{
+    "apiVersion": "mq.ibm.com/v1beta1",
+    "kind": "QueueManager",
+    "metadata": {
+        "name": "name",
+        "namespace": "namespace",
+     },
+    "spec": {
+        "affinity": {
+            "nodeAffinity": {
+                "preferredDuringSchedulingIgnoredDuringExecution": [
+                    {
+                        "preference": {
+                            "matchExpressions": [
+                                {
+                                    "key": "qmworkernode",
+                                    "operator": "In",
+                                    "values": [
+                                        "1"
+                                    ]
+                                }
+                            ]
+                        },
+                        "weight": 1
+                    }
+                ],
+                "requiredDuringSchedulingIgnoredDuringExecution": {
+                    "nodeSelectorTerms": [
+                        {
+                            "matchExpressions": [
+                                {
+                                    "key": "qmworkernode",
+                                    "operator": "In",
+                                    "values": [
+                                        "1",
+                                        "2"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "imagePullSecrets": [
+            {
+                "name": "all-icr-io"
+            }
+        ],
+        "license": {
+            "accept": true,
+            "license": "L-RJON-BN7PN3",
+            "metric": "VirtualProcessorCore",
+            "use": "Production"
+        },
+        "queueManager": {
+            "availability": {
+                "type": "MultiInstance"
+            },
+            "image": "image",
+            "imagePullPolicy": "IfNotPresent",
+			"metrics": {
+                "enabled": true
+            },
+            "name": "QM1",
+            "resources": {
+                "limits": {
+                    "cpu": "500m",
+                    "memory": "512Mi"
+                },
+                "requests": {
+                    "cpu": "250m",
+                    "memory": "256Mi"
+                }
+            },
+            "storage": {
+                "persistedData": {
+                    "class": "ibmc-file-gold-gid",
+                    "enabled": true,
+                    "size": "40Gi",
+                    "type": "persistent-claim"
+                },
+                "queueManager": {
+                    "class": "ibmc-file-gold-gid",
+                    "size": "40Gi",
+                    "type": "persistent-claim"
+                },
+                "recoveryLogs": {
+                    "class": "ibmc-file-gold-gid",
+                    "enabled": true,
+                    "size": "40Gi",
+                    "type": "persistent-claim"
+                }
+            }
+        },
+        "securityContext": {
+            "supplementalGroups": [
+                99
+            ]
+        },
+        "template": {
+            "pod": {
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "MQSNOAUT",
+                                "value": "yes"
+                            }
+                        ],
+                        "name": "qmgr"
+                    }
+                ]
+            }
+        },
+        "version": "9.2.0.0-r1",
+        "web": {
+            "enabled": false
+        }
+    },
+ }
