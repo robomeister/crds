@@ -75,20 +75,20 @@
             },
             "storage": {
                 "persistedData": {
-                    "class": "ibmc-file-custom",
+                    "class": "ibmc-file-gold-gid",
                     "enabled": true,
-                    "size": "80Gi",
+                    "size": "10Gi",
                     "type": "persistent-claim"
                 },
                 "queueManager": {
-                    "class": "ibmc-file-custom",
-                    "size": "80Gi",
+                    "class": "ibmc-file-gold-gid",
+                    "size": "10Gi",
                     "type": "persistent-claim"
                 },
                 "recoveryLogs": {
-                    "class": "ibmc-file-custom",
+                    "class": "ibmc-file-gold-gid",
                     "enabled": true,
-                    "size": "80Gi",
+                    "size": "10Gi",
                     "type": "persistent-claim"
                 }
             }
