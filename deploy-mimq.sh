@@ -21,7 +21,6 @@ echo "base json"
 cat deploy-mimq-1.json
 
 
-
 if [[ -z ${QMGR_NAME} ]];
 then
    echo "Using default QM name QM1"

@@ -3,7 +3,7 @@
     "kind": "QueueManager",
     "metadata": {
         "name": "name",
-        "namespace": "namespace",
+        "namespace": "namespace"
      },
     "spec": {
         "affinity": {
@@ -117,5 +117,5 @@
         "web": {
             "enabled": false
         }
-    },
+    }
  }
