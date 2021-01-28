@@ -76,7 +76,7 @@ fi
 if [[ -z ${STORAGE_CLASS} ]];
 then
    echo "using default storage class"
-   cat deploy-mimq-7.json deploy-mimq-8.json
+   cp deploy-mimq-7.json deploy-mimq-10.json
 else
    echo "using storage class: ${STORAGE_CLASS}"
    cat deploy-miqm-7.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.persistedData.class="'${STORAGE_CLASS}'"' >deploy-mimq-8.json
@@ -87,7 +87,7 @@ fi
 if [[ -z ${STORAGE_SIZE} ]];
 then
    echo "using default disc size"
-   cat deploy-mimq-7.json deploy-mimq-8.json
+   cp deploy-mimq-10.json deploy-mimq-13.json
 else
    echo "using storage size: ${STORAGE_SIZE}"
    cat deploy-miqm-10.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.persistedData.size="'${STORAGE_SIZE}'"' >deploy-mimq-11.json
