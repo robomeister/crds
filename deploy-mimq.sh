@@ -73,19 +73,18 @@ else
       cat deploy-mimq-6.json | jq '.spec.queueManager.resources.requests.memory="'${MIN_MEMORY}'"' > deploy-mimq-7.json
 fi
 
-echo "json before storage-class"
-cat deploy-mimq-7.json
-
-
 if [[ -z ${STORAGE_CLASS} ]];
 then
-   echo "using default storage-class"
-   cp deploy-mimq-7.json deploy-mimq-10.json
+	echo "using default storage-class"
+	cp deploy-mimq-7.json deploy-mimq-10.json
 else
-   echo "using storage-class: ${STORAGE_CLASS}"
-   cat deploy-miqm-7.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.persistedData.class="'${STORAGE_CLASS}'"' >deploy-mimq-8.json
-   cat deploy-miqm-8.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.queueManager.class="'${STORAGE_CLASS}'"' >deploy-mimq-9.json
-   cat deploy-miqm-9.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.recoveryLogs.class="'${STORAGE_CLASS}'"' >deploy-mimq-10.json
+	echo "json before storage-class"
+	cat deploy-mimq-7.json
+   
+    echo "using storage-class: ${STORAGE_CLASS}"
+	cat deploy-miqm-7.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.persistedData.class="'${STORAGE_CLASS}'"' >deploy-mimq-8.json
+	cat deploy-miqm-8.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.queueManager.class="'${STORAGE_CLASS}'"' >deploy-mimq-9.json
+	cat deploy-miqm-9.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.recoveryLogs.class="'${STORAGE_CLASS}'"' >deploy-mimq-10.json
 fi
 
 if [[ -z ${STORAGE_SIZE} ]];
