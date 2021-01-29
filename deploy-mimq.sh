@@ -73,6 +73,10 @@ else
       cat deploy-mimq-6.json | jq '.spec.queueManager.resources.requests.memory="'${MIN_MEMORY}'"' > deploy-mimq-7.json
 fi
 
+echo "json before storage-class"
+cat deploy-mimq-7.json
+
+
 if [[ -z ${STORAGE_CLASS} ]];
 then
    echo "using default storage-class"
