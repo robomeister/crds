@@ -78,13 +78,10 @@ then
 	echo "using default storage-class"
 	cp deploy-mimq-7.json deploy-mimq-10.json
 else
-	echo "json before storage-class"
-	cat deploy-mimq-7.json
-   
     echo "using storage-class: ${STORAGE_CLASS}"
-	cat deploy-miqm-7.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.persistedData.class="'${STORAGE_CLASS}'"' >deploy-mimq-8.json
-	cat deploy-miqm-8.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.queueManager.class="'${STORAGE_CLASS}'"' >deploy-mimq-9.json
-	cat deploy-miqm-9.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.recoveryLogs.class="'${STORAGE_CLASS}'"' >deploy-mimq-10.json
+	cat deploy-mimq-7.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.persistedData.class="'${STORAGE_CLASS}'"' >deploy-mimq-8.json
+	cat deploy-mimq-8.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.queueManager.class="'${STORAGE_CLASS}'"' >deploy-mimq-9.json
+	cat deploy-mimq-9.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.recoveryLogs.class="'${STORAGE_CLASS}'"' >deploy-mimq-10.json
 fi
 
 if [[ -z ${STORAGE_SIZE} ]];
@@ -93,11 +90,10 @@ then
    cp deploy-mimq-10.json deploy-mimq-13.json
 else
    echo "using storage-size: ${STORAGE_SIZE}"
-   cat deploy-miqm-10.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.persistedData.size="'${STORAGE_SIZE}'"' >deploy-mimq-11.json
-   cat deploy-miqm-11.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.queueManager.size="'${STORAGE_SIZE}'"' >deploy-mimq-12.json
-   cat deploy-miqm-12.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.recoveryLogs.size="'${STORAGE_SIZE}'"' >deploy-mimq-13.json
+   cat deploy-mimq-10.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.persistedData.size="'${STORAGE_SIZE}'"' >deploy-mimq-11.json
+   cat deploy-mimq-11.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.queueManager.size="'${STORAGE_SIZE}'"' >deploy-mimq-12.json
+   cat deploy-mimq-12.json | jq '.metadata.name = "'${NAMESPACE}'-'${NAME}'"' | jq '.metadata.namespace = "'${NAMESPACE}'"' | jq '.spec.queueManager.image="'${PIPELINE_IMAGE_URL}'"' |  jq '.spec.queueManager.storage.recoveryLogs.size="'${STORAGE_SIZE}'"' >deploy-mimq-13.json
 fi
-
 
 echo "*** customized/deployable json is as follows ***"
 cat deploy-mimq-13.json
@@ -107,4 +103,3 @@ oc apply -f deploy-mimq-13.json --dry-run -o yaml
 
 echo "deploying"
 oc apply -f deploy-mimq-13.json 
-
