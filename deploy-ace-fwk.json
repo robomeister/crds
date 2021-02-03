@@ -13,9 +13,9 @@
             "aceclient.kdb",
             "aceclient.sth"
         ],
-		"containers": {
+        "containers": {
             "imagePullPolicy": "Always"
-		},
+        },
         "designerFlowsOperationMode": "disabled",
         "license": {
             "accept": true,
