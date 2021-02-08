@@ -6,6 +6,7 @@
         "namespace": "namespace"
     },
     "spec": {
+        "disableRoutes" : true,
         "adminServerSecure" : false,
         "barURL": "",
         "configurations": [
@@ -20,7 +21,7 @@
         "designerFlowsOperationMode": "disabled",
         "license": {
             "accept": true,
-            "license": "L-APEH-BPUCJK",
+            "license": "L-APEH-BSVCHU",
             "use": "AppConnectEnterpriseProduction"
         },
         "pod": {
@@ -56,7 +57,7 @@
             "endpointType": "https"
         },
         "tracing": {
-            "enabled": false
+            "enabled": true
         },
         "useCommonServices": false,
         "version": "11.0.0.10-r1"
