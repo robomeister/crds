@@ -6,7 +6,7 @@
         "namespace": "namespace"
     },
     "spec": {
-        "disableRoutes" : true,
+        "disableRoutes" : "true",
         "adminServerSecure" : false,
         "barURL": "",
         "configurations": [
