@@ -15,7 +15,7 @@ fi
 
 rm deploy-ace-robo.json
 
-wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-robo.json
+wget --no-cache https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-robo.json
 
 case $NAMESPACE in
   *"pt"*|*"prod"*|*"dr"*)
