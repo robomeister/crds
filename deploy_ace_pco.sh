@@ -148,7 +148,7 @@ else
       echo "Re-applying the deployment..."
       oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json | jq '.spec.selector.matchLabels.'${MATCH_SELECTOR}'="true" | .metadata.labels.'${MATCH_SELECTOR}'="true" | .spec.template.metadata.labels.'${MATCH_SELECTOR}'="true"' | oc -n ${NAMESPACE} replace --force -f -
       set -x
-      if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="300s" --namespace ${NAMESPACE}; then
+      if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="900s" --namespace ${NAMESPACE}; then
         STATUS="pass"
       else
         STATUS="fail"
