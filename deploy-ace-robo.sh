@@ -13,20 +13,18 @@ then
    REPLICAS=1
 fi
 
-rm deploy-ace.json
-rm deploy-ace-prod.json
+rm deploy-ace-robo.json
 
-wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace.json
-wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-prod.json
+wget --no-cache https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-robo.json
 
 case $NAMESPACE in
   *"pt"*|*"prod"*|*"dr"*)
     echo "Using PRODUCTION deployment json"
-    cp deploy-ace-prod.json deploy.json
+    cp deploy-ace-robo.json deploy.json
     ;;
   *)
     echo "Using non-prod deployment json"
-    cp deploy-ace.json deploy.json
+    cp deploy-ace-robo.json deploy.json
     ;;    
 esac
 
