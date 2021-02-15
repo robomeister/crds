@@ -11,7 +11,8 @@
         "barURL": "",
         "configurations": [
             "setdbparms-conf",
-            "odbc.ini"
+            "odbc.ini",
+            "generic-conf"
         ],
         "designerFlowsOperationMode": "disabled",
         "license": {
