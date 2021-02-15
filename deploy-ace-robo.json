@@ -10,7 +10,8 @@
         "adminServerSecure" : false,
         "barURL": "",
         "configurations": [
-            "setdbparms-conf"
+            "setdbparms-conf",
+            "odbc.ini"
         ],
         "designerFlowsOperationMode": "disabled",
         "license": {
