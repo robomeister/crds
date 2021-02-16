@@ -41,7 +41,7 @@
                         }
                     }
                 },
-				"volumeMounts": {
+                "volumeMounts": {
                     "name": "varlog",
                     "mountPath": "/home/aceuser/ace-server/log4j/logs"
                 }				
