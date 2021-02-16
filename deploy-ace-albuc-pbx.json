@@ -41,7 +41,7 @@
                         }
                     }
                 },
-				"volumeMounts": {
+                "volumeMounts": {
                     "name": "varlog",
                     "mountPath": "/home/aceuser/ace-server/log4j/logs"
                 }
@@ -64,7 +64,7 @@
         },
         "useCommonServices": false,
         "version": "11.0.0.10-r1",
-		"volumes": {
+        "volumes": {
             "name": "varlog",
             "persistentVolumeClaim": {
                 "claimName": "logs-adj-splunk-uf"
