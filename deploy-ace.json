@@ -18,9 +18,10 @@
             "aceclient.sth"
         ],
         "designerFlowsOperationMode": "disabled",
+		"disableRoutes" : true,
         "license": {
             "accept": true,
-            "license": "L-APEH-BPUCJK",
+            "license": "L-APEH-BSVCHU",
             "use": "AppConnectEnterpriseProduction"
         },
         "pod": {
@@ -59,6 +60,6 @@
             "enabled": false
         },
         "useCommonServices": false,
-        "version": "11.0.0.10-r1"
+        "version": "11.0.0.11-r1"
     }
 }
