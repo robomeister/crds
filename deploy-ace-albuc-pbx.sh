@@ -120,13 +120,14 @@ else
 	  
    fi
 
-   echo "Re-applying the deployment..."
+   echo "Re-applying the deployment - modified deploy json follows..."
    
    cat deployed-3.json
+
    oc -n ${NAMESPACE} replace --force -f deployed-3.json
 
    set -x
-   if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="300s" --namespace ${NAMESPACE}; then
+   if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="1200s" --namespace ${NAMESPACE}; then
       STATUS="pass"
    else
      STATUS="fail"

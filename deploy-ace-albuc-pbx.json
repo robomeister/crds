@@ -40,10 +40,6 @@
                             "memory": "256Mi"
                         }
                     }
-                },
-                "volumeMounts": {
-                    "name": "varlog",
-                    "mountPath": "/home/aceuser/ace-server/log4j/logs"
                 }
             },
             "imagePullSecrets": [
@@ -63,12 +59,6 @@
             "enabled": false
         },
         "useCommonServices": false,
-        "version": "11.0.0.10-r1",
-        "volumes": {
-            "name": "varlog",
-            "persistentVolumeClaim": {
-                "claimName": "logs-adj-splunk-uf"
-            }
-        }
+        "version": "11.0.0.10-r1"
     }
 }
