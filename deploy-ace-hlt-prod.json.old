@@ -11,14 +11,12 @@
         "configurations": [
             "truststore.jks",
             "aceclient.kdb",
-            "aceclient.sth",
-			"odbc.ini"
+            "aceclient.sth"
         ],
         "designerFlowsOperationMode": "disabled",
-		"disableRoutes" : true,
         "license": {
             "accept": true,
-            "license": "L-APEH-BSVCHU",
+            "license": "L-APEH-BPUCJK",
             "use": "AppConnectEnterpriseProduction"
         },
         "pod": {
@@ -57,6 +55,6 @@
             "enabled": false
         },
         "useCommonServices": false,
-        "version": "11.0.0.11-r1"
+        "version": "11.0.0.10-r1"
     }
 }
