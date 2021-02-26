@@ -70,7 +70,7 @@
                 "enabled": true
             },
             "name": "QM1",
-			"readinessProbe": {
+            "readinessProbe": {
                 "failureThreshold": 1,
                 "initialDelaySeconds": 300,
                 "periodSeconds": 5,
