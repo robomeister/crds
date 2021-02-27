@@ -18,6 +18,7 @@
             "aceclient.sth"
         ],
         "designerFlowsOperationMode": "disabled",
+        "disableRoutes": true,        
         "license": {
             "accept": true,
             "license": "L-APEH-BPUCJK",
