@@ -47,6 +47,9 @@
                     "memory": "512Mi"
                 }
             },
+            "route": {
+                "enabled": false
+            },		
             "storage": {
                 "queueManager": {
                     "class": "ibmc-block-custom-high-iops",
