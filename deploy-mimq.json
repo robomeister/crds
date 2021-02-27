@@ -87,6 +87,9 @@
                     "memory": "256Mi"
                 }
             },
+            "route": {
+                "enabled": false
+            },
             "storage": {
                 "persistedData": {
                     "class": "ibmc-file-gold-gid",
