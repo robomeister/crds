@@ -33,6 +33,9 @@
                     "memory": "1024Mi"
                 }
             },
+            "route": {
+                "enabled": false
+            },            
             "storage": {
                 "queueManager": {
                     "class": "ibmc-file-high-iops-gid",
