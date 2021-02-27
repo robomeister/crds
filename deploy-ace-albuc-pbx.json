@@ -18,7 +18,7 @@
             "aceclient.sth"
         ],
         "designerFlowsOperationMode": "disabled",
-		"disableRoutes" : true,
+        "disableRoutes" : true,
         "license": {
             "accept": true,
             "license": "L-APEH-BSVCHU",
