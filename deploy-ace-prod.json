@@ -15,7 +15,8 @@
             "sask-health-keystore.jks",
             "truststore.jks",
             "aceclient.kdb",
-            "aceclient.sth"
+            "aceclient.sth",
+			"odbc.ini"
         ],
         "designerFlowsOperationMode": "disabled",
 		"disableRoutes" : true,
