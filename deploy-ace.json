@@ -54,9 +54,6 @@
         "router": {
             "timeout": "120s"
         },
-        "service": {
-            "endpointType": "https"
-        },
 		"service": {
             "endpointType": "https",
              "ports": [
