@@ -16,7 +16,7 @@
             "truststore.jks",
             "aceclient.kdb",
             "aceclient.sth",
-			"odbc.in"
+			"odbc.ini"
         ],
         "designerFlowsOperationMode": "disabled",
 		"disableRoutes" : true,
