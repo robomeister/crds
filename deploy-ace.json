@@ -57,6 +57,24 @@
         "service": {
             "endpointType": "https"
         },
+		"service": {
+            "endpointType": "https",
+             "ports": [
+                {
+                    "name": "tcpin-1",
+                    "port": 7001,
+                    "protocol": "TCP",
+                    "targetPort": 7001
+                },
+				{
+                    "name": "tcpin-2",
+                    "port": 7025,
+                    "protocol": "TCP",
+                    "targetPort": 7025
+                }
+            ],
+            "type": "ClusterIP"
+        },
         "tracing": {
             "enabled": false
         },
