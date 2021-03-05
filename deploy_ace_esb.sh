@@ -154,7 +154,7 @@ else
    then
       echo "No Match Selector Specified.  Enabling metrics and setting log4j PVC..."
 	  cat deployed.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deployed-1.json
-      cat deployed-1.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-pco-log4j"} }]' >deployed-2.json
+      cat deployed-1.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deployed-2.json
       cat deployed-2.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deployed-3.json
    else
       echo "Updating Match Selectors and enabling metrics and setting log4j PVC..."
