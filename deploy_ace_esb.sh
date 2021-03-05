@@ -181,3 +181,4 @@ else
      echo "DEPLOYMENT FAILED"
      exit 1
    fi
+fi
