@@ -1,4 +1,4 @@
-{
+ {
     "apiVersion": "appconnect.ibm.com/v1beta1",
     "kind": "IntegrationServer",
     "metadata": {
@@ -9,10 +9,6 @@
         "adminServerSecure" : false,
         "barURL": "",
         "configurations": [
-            "setdbparms-conf",
-            "generic-conf",
-            "policies-conf",
-            "sask-health-keystore.jks",
             "truststore.jks",
             "aceclient.kdb",
             "aceclient.sth",
@@ -35,7 +31,7 @@
                     "resources": {
                         "limits": {
                             "cpu": "250m",
-                            "memory": "512Mi"
+                            "memory": "1024Mi"
                         },
                         "requests": {
                             "cpu": "125m",
@@ -54,23 +50,8 @@
         "router": {
             "timeout": "120s"
         },
-		"service": {
-            "endpointType": "https",
-             "ports": [
-                {
-                    "name": "tcpin-1",
-                    "port": 7001,
-                    "protocol": "TCP",
-                    "targetPort": 7001
-                },
-				{
-                    "name": "tcpin-2",
-                    "port": 7025,
-                    "protocol": "TCP",
-                    "targetPort": 7025
-                }
-            ],
-            "type": "ClusterIP"
+        "service": {
+            "endpointType": "https"
         },
         "tracing": {
             "enabled": false
