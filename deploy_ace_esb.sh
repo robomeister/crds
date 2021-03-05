@@ -173,6 +173,12 @@ else
    set -x
    if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="1200s" --namespace ${NAMESPACE}; then
       STATUS="pass"
+	  echo "Deployed json is as follows:"
+	  
+	  oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
+		
+      cat deployed.json 
+		
    else
      STATUS="fail"
    fi
