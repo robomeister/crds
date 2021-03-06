@@ -127,4 +127,24 @@ else
      echo "DEPLOYMENT FAILED"
      exit 1
    fi
+   
+   if [[ -z ${PRIVATE_VLAN} ]]; then
+     echo "Not Adding a Private IP"
+   else
+     echo "Adding Private IP"
+     oc -n ${NAMESPACE} get service ${DEPLOYMENT_NAME} -o json > service.json
+     cat service.json | jq 'del(.spec.clusterIP) | del(.metadata.managedFields) | del(.metadata.creationTimestamp) | del(.metadata.ownerReferences) | del(.metadata.resourceVersion) | del(.metadata.selfLink) | del(.metadata.uid) | .spec.type="LoadBalancer" | .spec.externalTrafficPolicy="Local" | .metadata.annotations."service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features"="ipvs" | .metadata.annotations."service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type"="private" | .metadata.annotations."service.kubernetes.io/ibm-load-balancer-cloud-provider-vlan"= "'${PRIVATE_VLAN}'" | .metadata.name=(.metadata.name+"-private")' > private-service.json
+
+     if [[ -z ${PRIVATE_IP} ]]; 
+     then
+        echo "Grabbing randomly available IP"
+        cp private-service.json private-service-2.json
+     else
+        echo "Applying ${PRIVATE_IP} to the service"
+        cat private-service.json | jq '.spec.loadBalancerIP="'${PRIVATE_IP}'"' > private-service-2.json
+     fi
+
+     cat private-service-2.json
+     oc apply -f private-service-2.json
+   fi   
 fi
