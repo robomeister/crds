@@ -17,11 +17,38 @@ DEPLOYMENT_NAME=${NAMESPACE}-${IDS_PROJECT_NAME}-is
 
 rm deploy-ace-esb.json
 
-wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-esb.json
+oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME}
+
+if oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME}; then
+   echo "Deployment ${DEPLOYMENT_NAME} already exists - will modify deployment" 
+   DEPLOYMENT_EXISTS="true"
+   oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deploy-ace-esb.json
+   if [[ $(cat deployed.json|grep varlog|wc -l) -eq 0 ]];
+   then
+      echo "No varlog mount/claim found in deployment" 
+	  PVC_NEEDED = "true";
+   else	 
+      echo "varlog mount/claim found in deployment" 
+	  PVC_NEEDED = "false";
+   fi	  
+   if [[ $(cat deployed.json|grep workernode|wc -l) -eq 0 ]];
+   then
+      echo "No worker node affinity found in deployment" 
+	  WORKER_NEEDED = "true";
+   else	 
+      echo "Worker node affinity found in deployment" 
+	  WORKER_NEEDED = "true";
+   fi	  
+else
+   echo "Deployment ${DEPLOYMENT_NAME} does not exist - will deploy and then modify deployment"
+   DEPLOYMENT_EXISTS="false"
+   echo "Getting base json file from repro..."
+   wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-esb.json
+fi
 
 cp deploy-ace-esb.json deploy.json
 
-echo "Default json"
+echo "Initial json before changes"
 cat deploy.json
 
 case $NAMESPACE in
@@ -131,66 +158,57 @@ echo "*** end: modified json to deploy ***"
 echo "DEPLOYING..."
 oc apply -f deploy10.json 
 
-set -x
-if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="1800s" --namespace ${NAMESPACE}; then
-  STATUS="pass"
-else
-  STATUS="fail"
-fi
-set +x
+echo "$(date) - waiting for deploy to take"
+sleep 60s
+echo "$(date) - done waiting"
 
-if [ "$STATUS" == "fail" ]; then
-  echo "DEPLOYMENT FAILED"
-  exit 1
-else
-   #echo "$(date) - waiting for deploy to take"
-   #sleep 60s
-   #echo "$(date) - done waiting"
 
-   echo "Getting deployment json..."
 
-   oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
+echo "Getting deployment json..."
 
-   #echo "Deployment json is as follows: "
-   #cat deployed.json
+oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
 
-   if [[ $(cat deployed.json|grep varlog|wc -l) -eq 0 ]];
-   then
-      echo "No varlog mount/claim found in deployment" 
-      if [[ -z ${MATCH_SELECTOR} ]];
-      then
+echo "Deployment json is as follows: "
+
+cat deployed.json
+
+if [[ $(cat deployed.json|grep varlog|wc -l) -eq 0 ]];
+then
+    echo "No varlog mount/claim found in deployment" 
+
+    if [[ -z ${MATCH_SELECTOR} ]];
+    then
          echo "No Match Selector Specified.  Enabling metrics and setting log4j PVC..."
 	     cat deployed.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deployed-1.json
          cat deployed-1.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deployed-2.json
          cat deployed-2.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deployed-3.json
-      else
+    else
          echo "Updating Match Selectors and enabling metrics and setting log4j PVC..."
          cat deployed.json  | jq '.spec.template.spec.containers[0].env[1].value="true" | .spec.selector.matchLabels.'${MATCH_SELECTOR}'="true" | .metadata.labels.'${MATCH_SELECTOR}'="true" | .spec.template.metadata.labels.'${MATCH_SELECTOR}'="true"' >deployed-0.json
 	     cat deployed-0.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deployed-1.json
          cat deployed-1.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deployed-2.json
          cat deployed-2.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deployed-3.json
-      fi
+   fi
 
-      echo "Re-applying the deployment - modified deploy json follows..."
+   echo "Re-applying the deployment - modified deploy json follows..."
    
-      #cat deployed-3.json
+   cat deployed-3.json
    
-      oc replace --force -n ${NAMESPACE} -f deployed-3.json
+   oc replace --force -n ${NAMESPACE} -f deployed-3.json
 
-      #oc apply -f deployed-3.json
+   #oc apply -f deployed-3.json
 
-      #sleep 30s
+   sleep 30s
    
-      echo "Deployed json is as follows:"
+   echo "Deployed json is as follows:"
 	  
-      oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
+   oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
 		
-      cat deployed.json 
+   cat deployed.json 
 		
-      echo "DEPLOYMENT COMPLETED - Check Pod is running in namespace ${NAMESPACE}"
-   else
-      echo "No re-deploy required - volume mount and claim found - Check Pod is running in namespace ${NAMESPACE}"
-   fi   
-   exit 0
+   echo "DEPLOYMENT COMPLETED - Check Pod is running in namespace ${NAMESPACE}"
+else
+   echo "No re-deploy required - volume mount and claim found - Check Pod is running in namespace ${NAMESPACE}"
 fi   
+exit 0
    
