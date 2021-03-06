@@ -175,7 +175,7 @@ else
    
       #cat deployed-3.json
    
-      oc replace --force -n ${NAMESPACE} -f deployed-3.json
+      oc replace --force --wait=true -n ${NAMESPACE} -f deployed-3.json
 
       #oc apply -f deployed-3.json
 
