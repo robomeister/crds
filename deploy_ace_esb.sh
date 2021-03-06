@@ -132,6 +132,8 @@ echo "DEPLOYING..."
 oc apply -f deploy10.json 
 
 echo "$(date) - waiting for deploy to take"
+sleep 15s
+
 set -x
 if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="1800s" --namespace ${NAMESPACE}; then
   STATUS="pass"
