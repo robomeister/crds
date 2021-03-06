@@ -136,7 +136,13 @@ sleep 30s
 
 DEPLOYMENT_NAME=${NAMESPACE}-${IDS_PROJECT_NAME}-is
 
+echo "Getting deployment json..."
+
 oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
+
+echo "Deployment json is as follows: "
+
+cat deployed.json
 
 if [[ -z ${MATCH_SELECTOR} ]];
 then
