@@ -132,7 +132,7 @@ oc apply -f deploy10.json --dry-run -o yaml
 echo "DEPLOYING..."
 oc apply -f deploy10.json
 
-sleep 10s
+sleep 30s
 
 DEPLOYMENT_NAME=${NAMESPACE}-${IDS_PROJECT_NAME}-is
 
@@ -158,7 +158,7 @@ cat deployed-3.json
    
 oc -n ${NAMESPACE} replace --force -f deployed-3.json
 
-sleep 10s
+sleep 30s
    
 echo "Deployed json is as follows:"
 	  
