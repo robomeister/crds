@@ -142,7 +142,7 @@ echo "Getting deployment json..."
 
 oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
 
-#echo "Deployment json is as follows: "
+echo "Deployment json is as follows: "
 
 cat deployed.json
 
