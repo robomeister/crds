@@ -130,7 +130,7 @@ echo "DRY RUN..."
 oc apply -f deploy10.json --dry-run -o yaml
 
 echo "DEPLOYING..."
-oc apply -f deploy10.json
+oc apply -f deploy10.json 
 
 echo "$(date) - waiting for deploy to take"
 sleep 60s
@@ -144,36 +144,39 @@ oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
 
 echo "Deployment json is as follows: "
 
-cat deployed.json
-
-if [[ -z ${MATCH_SELECTOR} ]];
+if [[ $(cat deployed.json|grep varlog|wc -l) -eq 0 ]];
 then
-      echo "No Match Selector Specified.  Enabling metrics and setting log4j PVC..."
-	  cat deployed.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deployed-1.json
-      cat deployed-1.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deployed-2.json
-      cat deployed-2.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deployed-3.json
-else
-      echo "Updating Match Selectors and enabling metrics and setting log4j PVC..."
-      cat deployed.json  | jq '.spec.template.spec.containers[0].env[1].value="true" | .spec.selector.matchLabels.'${MATCH_SELECTOR}'="true" | .metadata.labels.'${MATCH_SELECTOR}'="true" | .spec.template.metadata.labels.'${MATCH_SELECTOR}'="true"' >deployed-0.json
-	  cat deployed-0.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deployed-1.json
-      cat deployed-1.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deployed-2.json
-      cat deployed-2.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deployed-3.json
-fi
+    echo "No varlog mount/claim found in deployment" 
 
-echo "Re-applying the deployment - modified deploy json follows..."
-   
-cat deployed-3.json
-   
-oc -n ${NAMESPACE} replace --force -f deployed-3.json
+    if [[ -z ${MATCH_SELECTOR} ]];
+    then
+         echo "No Match Selector Specified.  Enabling metrics and setting log4j PVC..."
+	     cat deployed.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deployed-1.json
+         cat deployed-1.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deployed-2.json
+         cat deployed-2.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deployed-3.json
+   else
+         echo "Updating Match Selectors and enabling metrics and setting log4j PVC..."
+         cat deployed.json  | jq '.spec.template.spec.containers[0].env[1].value="true" | .spec.selector.matchLabels.'${MATCH_SELECTOR}'="true" | .metadata.labels.'${MATCH_SELECTOR}'="true" | .spec.template.metadata.labels.'${MATCH_SELECTOR}'="true"' >deployed-0.json
+	     cat deployed-0.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deployed-1.json
+         cat deployed-1.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deployed-2.json
+         cat deployed-2.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deployed-3.json
+   fi
 
-sleep 30s
+   echo "Re-applying the deployment - modified deploy json follows..."
    
-echo "Deployed json is as follows:"
+   cat deployed-3.json
+   
+   oc -n ${NAMESPACE} replace --force -f deployed-3.json
+
+   sleep 30s
+   
+   echo "Deployed json is as follows:"
 	  
-oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
+   oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
 		
-cat deployed.json 
+   cat deployed.json 
 		
-echo "DEPLOYMENT COMPLETED - Check Pod is running in namespace ${NAMESPACE}"
+   echo "DEPLOYMENT COMPLETED - Check Pod is running in namespace ${NAMESPACE}"
+fi   
 exit 0
    
