@@ -143,9 +143,9 @@ if [ "$STATUS" == "fail" ]; then
   echo "DEPLOYMENT FAILED"
   exit 1
 else
-   #echo "$(date) - waiting for deploy to take"
-   #sleep 60s
-   #echo "$(date) - done waiting"
+   echo "$(date) - waiting for deploy to take"
+   sleep 60s
+   echo "$(date) - done waiting"
 
    echo "Getting deployment json..."
 
