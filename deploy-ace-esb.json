@@ -46,6 +46,7 @@
                 }
             ]
         },
+		"progressDeadlineSeconds": 1200,
         "replicas": 1,
         "router": {
             "timeout": "120s"
