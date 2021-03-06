@@ -142,7 +142,9 @@ echo "Getting deployment json..."
 
 oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
 
-echo "Deployment json is as follows: "
+#echo "Deployment json is as follows: "
+
+cat deployed.json
 
 if [[ $(cat deployed.json|grep varlog|wc -l) -eq 0 ]];
 then
