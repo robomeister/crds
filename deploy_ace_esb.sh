@@ -131,12 +131,14 @@ echo "*** end: modified json to deploy ***"
 echo "DEPLOYING..."
 oc apply -f deploy10.json 
 
+echo "$(date) - waiting for deploy to take"
 set -x
 if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="1800s" --namespace ${NAMESPACE}; then
   STATUS="pass"
 else
   STATUS="fail"
 fi
+echo "$(date) - done waiting"
 set +x
 
 if [ "$STATUS" == "fail" ]; then
