@@ -153,7 +153,7 @@ then
 	     cat deployed.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deployed-1.json
          cat deployed-1.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deployed-2.json
          cat deployed-2.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deployed-3.json
-   else
+    else
          echo "Updating Match Selectors and enabling metrics and setting log4j PVC..."
          cat deployed.json  | jq '.spec.template.spec.containers[0].env[1].value="true" | .spec.selector.matchLabels.'${MATCH_SELECTOR}'="true" | .metadata.labels.'${MATCH_SELECTOR}'="true" | .spec.template.metadata.labels.'${MATCH_SELECTOR}'="true"' >deployed-0.json
 	     cat deployed-0.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deployed-1.json
@@ -165,7 +165,9 @@ then
    
    cat deployed-3.json
    
-   oc -n ${NAMESPACE} replace --force -f deployed-3.json
+   #oc -n ${NAMESPACE} replace --force -f deployed-3.json
+
+   oc apply -f deployed-3.json
 
    sleep 30s
    
