@@ -165,9 +165,9 @@ then
    
    cat deployed-3.json
    
-   #oc -n ${NAMESPACE} replace --force -f deployed-3.json
+   oc replace --force -n ${NAMESPACE} -f deployed-3.json
 
-   oc apply -f deployed-3.json
+   #oc apply -f deployed-3.json
 
    sleep 30s
    
