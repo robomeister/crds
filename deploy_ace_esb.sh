@@ -132,7 +132,9 @@ oc apply -f deploy10.json --dry-run -o yaml
 echo "DEPLOYING..."
 oc apply -f deploy10.json
 
-sleep 30s
+echo "$(date) - waiting for deploy to take"
+sleep 60s
+echo "$(date) - done waiting"
 
 DEPLOYMENT_NAME=${NAMESPACE}-${IDS_PROJECT_NAME}-is
 
