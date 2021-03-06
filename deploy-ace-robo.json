@@ -10,9 +10,9 @@
         "adminServerSecure" : false,
         "barURL": "",
         "configurations": [
-            "robo-setdbparms-conf",
-            "robo-odbc.ini",
-            "robo-generic-conf"
+            "setdbparms-conf",
+            "odbc.ini",
+            "generic-conf"
         ],
         "designerFlowsOperationMode": "disabled",
         "license": {
