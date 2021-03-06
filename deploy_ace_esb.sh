@@ -126,9 +126,6 @@ echo "*** begin: modified json to deploy ***"
 cat deploy10.json
 echo "*** end: modified json to deploy ***"
 
-echo "DRY RUN..."
-oc apply -f deploy10.json --dry-run -o yaml
-
 echo "DEPLOYING..."
 oc apply -f deploy10.json 
 
