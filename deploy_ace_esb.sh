@@ -177,6 +177,8 @@ then
    cat deployed.json 
 		
    echo "DEPLOYMENT COMPLETED - Check Pod is running in namespace ${NAMESPACE}"
+else
+   echo "No re-deploy required - volume mount and claim found - Check Pod is running in namespace ${NAMESPACE}"
 fi   
 exit 0
    
