@@ -14,7 +14,7 @@
             "aceclient.sth",
             "server-conf",
             "setdbparms-conf",
-            "truststore.jks
+            "truststore.jks"
         ],
         "designerFlowsOperationMode": "disabled",
         "license": {
