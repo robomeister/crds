@@ -10,9 +10,11 @@
         "adminServerSecure" : false,
         "barURL": "",
         "configurations": [
+            "aceclient.kdb",
+            "aceclient.sth",
+            "server-conf",
             "setdbparms-conf",
-            "odbc.ini",
-            "generic-conf"
+            "truststore.jks"
         ],
         "designerFlowsOperationMode": "disabled",
         "license": {
@@ -29,12 +31,12 @@
                     "image": "image",
                     "resources": {
                         "limits": {
-                            "cpu": "250m",
-                            "memory": "1024Mi"
+                            "cpu": "2000m",
+                            "memory": "2048Mi"
                         },
                         "requests": {
-                            "cpu": "125m",
-                            "memory": "256Mi"
+                            "cpu": "1000m",
+                            "memory": "1024Mi"
                         }
                     }
                 }
