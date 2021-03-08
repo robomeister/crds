@@ -177,6 +177,7 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
       cat deploy10.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deploy11.json
       cat deploye11.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deploy12.json
    else
+      echo "Volume mount and claim already allocated"
       cat deploy9.json >deploy12.json   
    fi
 
