@@ -157,7 +157,7 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
    #delete the ACE_CONFIGURATIONS env 
    cat  deploy7.json | jq -r 'del( .spec.template.spec.containers[0].env[] | select(.name == "ACE_CONFIGURATIONS")  )' >deploy7-no-configuration.json
 
-   cat deploy7-no-configuration.json | jq '.spec.template.spec.containers[0].env += [{"name": "ACE_CONFIGURATIONS", "value": "${ACE_CONFIGURATIONS}"}]' >deploy8.json
+   cat deploy7-no-configuration.json | jq '.spec.template.spec.containers[0].env += [{"name": "ACE_CONFIGURATIONS", "value": "'${ACE_CONFIGURATIONS}'"}]' >deploy8.json
 
 
    if [[ $(cat deploy8.json | jq -r '.spec.template.spec.containers[0].env[] | select(.name=="ACE_ENABLE_METRICS") | .value') == "true" ]];
