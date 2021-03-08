@@ -184,6 +184,11 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
    echo "Re-applying the deployment"
    
    oc replace --force --wait=true -n ${NAMESPACE} -f deploy12.json
+
+   echo "$(date) - waiting for deploy to take"
+   sleep 15s
+   echo "$(date) - now getting deployment "
+  
   
    echo "Deployed json is as follows:"
 	  
