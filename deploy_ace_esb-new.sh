@@ -75,37 +75,37 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
    if [[ -z ${MAX_CPU} ]];
    then
       echo "using default max cpu"
-      cat deploy.json | jq '.spec.template.spec.containers.resources.limits.cpu="'${DEFAULT_MAX_CPU}'"' > deploy2.json
+      cat deploy.json | jq '.spec.template.spec.containers[0].resources.limits.cpu="'${DEFAULT_MAX_CPU}'"' > deploy2.json
    else
       echo "setting max cpu: ${MAX_CPU}"
-      cat deploy.json | jq '.spec.template.spec.containers.resources.limits.cpu="'${MAX_CPU}'"' > deploy2.json
+      cat deploy.json | jq '.spec.template.spec.containers[0].resources.limits.cpu="'${MAX_CPU}'"' > deploy2.json
    fi
 
    if [[ -z ${MAX_MEMORY} ]];
    then
       echo "using default max memory"
-      cat deploy2.json | jq '.spec.template.spec.containers.resources.limits.memory="'${DEFAULT_MAX_MEMORY}'"' > deploy3.json
+      cat deploy2.json | jq '.spec.template.spec.containers[0].resources.limits.memory="'${DEFAULT_MAX_MEMORY}'"' > deploy3.json
    else
       echo "setting max memory: ${MAX_MEMORY}"
-      cat deploy2.json | jq '.spec.template.spec.containers.resources.limits.memory="'${MAX_MEMORY}'"' > deploy3.json
+      cat deploy2.json | jq '.spec.template.spec.containers[0].resources.limits.memory="'${MAX_MEMORY}'"' > deploy3.json
    fi   
    
    if [[ -z ${MIN_CPU} ]];
    then
       echo "using default min cpu"
-      cat deploy3.json | jq '.spec.template.spec.containers.resources.requests.cpu="'${DEFAULT_MIN_CPU}'"' > deploy4.json
+      cat deploy3.json | jq '.spec.template.spec.containers[0].resources.requests.cpu="'${DEFAULT_MIN_CPU}'"' > deploy4.json
    else
       echo "setting max cpu: ${MIN_CPU}"
-      cat deploy3.json | jq '.spec.template.spec.containers.resources.requests.cpu="'${MIN_CPU}'"' > deploy4.json
+      cat deploy3.json | jq '.spec.template.spec.containers[0].resources.requests.cpu="'${MIN_CPU}'"' > deploy4.json
    fi
 
    if [[ -z ${MIN_MEMORY} ]];
    then
       echo "using default min memory"
-      cat deploy4.json | jq '.spec.template.spec.containers.resources.requests.memory="'${DEFAULT_MIN_MEMORY}'"' > deploy5.json
+      cat deploy4.json | jq '.spec.template.spec.containers[0].resources.requests.memory="'${DEFAULT_MIN_MEMORY}'"' > deploy5.json
    else
       echo "setting min memory: ${MIN_MEMORY}"
-      cat deploy4.json | jq '.spec.template.spec.containers.resources.requests.memory="'${MIN_MEMORY}'"' > deploy5.json
+      cat deploy4.json | jq '.spec.template.spec.containers[0].resources.requests.memory="'${MIN_MEMORY}'"' > deploy5.json
    fi   
    
    if [[ -z ${WORKER_NODE} ]];
@@ -119,7 +119,7 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
       cat deploy5-no-worker.json | jq '.spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions += [{"key":"workernode","operator":"In", "values":["'${WORKER_NODE}'"]}]' > deploy6.json
    fi
 
-   cat deploy6.json |  jq '.spec.template.spec.containers.image="'${PIPELINE_IMAGE_URL}'" | .spec.replicas='${REPLICAS}'' > deploy7.json
+   cat deploy6.json |  jq '.spec.template.spec.containers[0].image="'${PIPELINE_IMAGE_URL}'" | .spec.replicas='${REPLICAS}'' > deploy7.json
    
    if [[ -z ${SERVER_CONF} ]];
    then
