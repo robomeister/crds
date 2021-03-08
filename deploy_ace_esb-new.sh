@@ -176,6 +176,8 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
       cat deploy9.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deploy10.json
       cat deploy10.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deploy11.json
       cat deploye11.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deploy12.json
+   else
+      cat deploy9.json >deploy12.json   
    fi
 
    echo "Modified deployment is as follows"
