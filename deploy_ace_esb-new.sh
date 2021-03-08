@@ -56,7 +56,7 @@ else
 fi
 
 #set initial deploy file
-cp deploy-ace-esb.json deploy.json
+cp deploy-ace-esb-new.json deploy.json
 
 echo "$(date): Initial deployment json before changes"
 cat deploy.json
