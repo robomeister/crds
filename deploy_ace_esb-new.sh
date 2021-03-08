@@ -60,37 +60,37 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
    if [[ -z ${MAX_CPU} ]];
    then
       echo "using default max cpu"
-      cat deploy.json | jq '.spec.template.spec.containers[0].resources.limits.cpu="'${DEFAULT_MAX_CPU}'"' > deploy.json
+      cat deploy.json | jq '.spec.template.spec.containers[0].resources.limits.cpu="'${DEFAULT_MAX_CPU}'"' > deploy-1.json
    else
       echo "setting max cpu: ${MAX_CPU}"
-      cat deploy.json | jq '.spec.template.spec.containers[0].resources.limits.cpu="'${MAX_CPU}'"' > deploy.json
+      cat deploy.json | jq '.spec.template.spec.containers[0].resources.limits.cpu="'${MAX_CPU}'"' > deploy-1.json
    fi
 
    if [[ -z ${MAX_MEMORY} ]];
    then
       echo "using default max memory"
-      cat deploy.json | jq '.spec.template.spec.containers[0].resources.limits.memory="'${DEFAULT_MAX_MEMORY}'"' > deploy.json
+      cat deploy-1.json | jq '.spec.template.spec.containers[0].resources.limits.memory="'${DEFAULT_MAX_MEMORY}'"' > deploy.json
    else
       echo "setting max memory: ${MAX_MEMORY}"
-      cat deploy.json | jq '.spec.template.spec.containers[0].resources.limits.memory="'${MAX_MEMORY}'"' > deploy.json
+      cat deploy-1.json | jq '.spec.template.spec.containers[0].resources.limits.memory="'${MAX_MEMORY}'"' > deploy.json
    fi   
    
    if [[ -z ${MIN_CPU} ]];
    then
       echo "using default min cpu"
-      cat deploy.json | jq '.spec.template.spec.containers[0].resources.requests.cpu="'${DEFAULT_MIN_CPU}'"' > deploy.json
+      cat deploy.json | jq '.spec.template.spec.containers[0].resources.requests.cpu="'${DEFAULT_MIN_CPU}'"' > deploy-1.json
    else
       echo "setting max cpu: ${MIN_CPU}"
-      cat deploy.json | jq '.spec.template.spec.containers[0].resources.requests.cpu="'${MIN_CPU}'"' > deploy.json
+      cat deploy.json | jq '.spec.template.spec.containers[0].resources.requests.cpu="'${MIN_CPU}'"' > deploy-1.json
    fi
 
    if [[ -z ${MIN_MEMORY} ]];
    then
       echo "using default min memory"
-      cat deploy.json | jq '.spec.template.spec.containers[0].resources.requests.memory="'${DEFAULT_MIN_MEMORY}'"' > deploy.json
+      cat deploy-1.json | jq '.spec.template.spec.containers[0].resources.requests.memory="'${DEFAULT_MIN_MEMORY}'"' > deploy.json
    else
       echo "setting min memory: ${MIN_MEMORY}"
-      cat deploy.json | jq '.spec.template.spec.containers[0].resources.requests.memory="'${MIN_MEMORY}'"' > deploy.json
+      cat deploy-1.json | jq '.spec.template.spec.containers[0].resources.requests.memory="'${MIN_MEMORY}'"' > deploy.json
    fi   
    
    if [[ -z ${WORKER_NODE} ]];
@@ -98,11 +98,11 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
       echo "not setting worker node selector"
    else
       echo "setting worker node selector: ${WORKER_NODE}"
-	  cat deploy.json | jq -r 'del( .spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[] | select(.key == "workernode")  )' >deploy-no-worker.json
-      cat deploy-no-worker.json | jq '.spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions += [{"key":"workernode","operator":"In", "values":["'${WORKER_NODE}'"]}]' > deploy.json
+	  cat deploy-1.json | jq -r 'del( .spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[] | select(.key == "workernode")  )' >deploy.json
+      cat deploy.json | jq '.spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions += [{"key":"workernode","operator":"In", "values":["'${WORKER_NODE}'"]}]' > deploy-1.json
    fi
 
-   cat deploy.json |  jq '.spec.template.spec.containers[0].image="'${PIPELINE_IMAGE_URL}'" | .spec.replicas='${REPLICAS}'' > deploy.json
+   cat deploy-1.json |  jq '.spec.template.spec.containers[0].image="'${PIPELINE_IMAGE_URL}'" | .spec.replicas='${REPLICAS}'' > deploy.json
    
    if [[ -z ${SERVER_CONF} ]];
    then
@@ -138,9 +138,9 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
    fi
    
    #delete the ACE_CONFIGURATIONS env 
-   cat  deploy.json | jq -r 'del( .spec.template.spec.containers[0].env[] | select(.name == "ACE_CONFIGURATIONS")  )' >deploy.json
+   cat  deploy.json | jq -r 'del( .spec.template.spec.containers[0].env[] | select(.name == "ACE_CONFIGURATIONS")  )' >deploy-1.json
 
-   cat deploy.json | jq '.spec.template.spec.containers[0].env += [{"name": "ACE_CONFIGURATIONS", "value": "'${ACE_CONFIGURATIONS}'"}]' >deploy.json
+   cat deploy-1.json | jq '.spec.template.spec.containers[0].env += [{"name": "ACE_CONFIGURATIONS", "value": "'${ACE_CONFIGURATIONS}'"}]' >deploy.json
 
 
    if [[ $(cat deploy.json | jq -r '.spec.template.spec.containers[0].env[] | select(.name=="ACE_ENABLE_METRICS") | .value') == "true" ]];
@@ -148,27 +148,28 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
       echo "Metrics already enabled"
    else
       echo "Enabling metrics"
-      cat deploy.json | jq -r 'del( .spec.template.spec.containers[0].env[] | select(.name == "ACE_ENABLE_METRICS")  )' >deploy.json
-      cat deploy.json | jq '.spec.template.spec.containers[0].env += [{"name": "ACE_ENABLE_METRICS", "value": "true"}]' >deploy.json
+      cat deploy.json | jq -r 'del( .spec.template.spec.containers[0].env[] | select(.name == "ACE_ENABLE_METRICS")  )' >deploy-1.json
+      cat deploy-1.json | jq '.spec.template.spec.containers[0].env += [{"name": "ACE_ENABLE_METRICS", "value": "true"}]' >deploy.json
    fi
 
    if [[ $(cat deploy.json|grep varlog|wc -l) -eq 0 ]];
    then
       echo "adding volume mount and claim for log4j"
-      cat deploy.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deploy.json
-      cat deploy.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deploy.json
-      cat deploy.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deploy.json
+      cat deploy.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deploy-1.json
+      cat deploy-1.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deploy.json
+      cat deploy.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deploy-1.json
    else
       echo "Volume mount and claim already allocated"
+	  mv deploy.json deploy-1.json
    fi
 
    echo "Modified deployment is as follows"
    
-   cat deploy.json
+   cat deploy-1.json
 
    echo "Re-applying the deployment"
    
-   oc replace --force --wait=true -n ${NAMESPACE} -f deploy.json
+   oc replace --force --wait=true -n ${NAMESPACE} -f deploy-1.json
 
    echo "$(date) - waiting for deploy to take"
    sleep 15s
