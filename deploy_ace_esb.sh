@@ -133,30 +133,26 @@ oc apply -f deploy10.json
 
 echo "$(date) - waiting for deploy to take"
 sleep 15s
+echo "$(date) - now watching deployment "
 
-set -x
 if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="1800s" --namespace ${NAMESPACE}; then
   STATUS="pass"
 else
   STATUS="fail"
 fi
-echo "$(date) - done waiting"
-set +x
+echo "$(date) - watch has completed"
 
 if [ "$STATUS" == "fail" ]; then
   echo "DEPLOYMENT FAILED"
   exit 1
 else
-   echo "$(date) - waiting for deploy to take"
+   echo "$(date) - now waiting for deployment to complete"
    sleep 60s
    echo "$(date) - done waiting"
 
    echo "Getting deployment json..."
 
    oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
-
-   #echo "Deployment json is as follows: "
-   #cat deployed.json
 
    if [[ $(cat deployed.json|grep varlog|wc -l) -eq 0 ]];
    then
@@ -175,16 +171,10 @@ else
          cat deployed-2.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deployed-3.json
       fi
 
-      echo "Re-applying the deployment - modified deploy json follows..."
-   
-      #cat deployed-3.json
+      echo "Re-applying the deployment"
    
       oc replace --force --wait=true -n ${NAMESPACE} -f deployed-3.json
-
-      #oc apply -f deployed-3.json
-
-      #sleep 30s
-   
+  
       echo "Deployed json is as follows:"
 	  
       oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deployed.json
