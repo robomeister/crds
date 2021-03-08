@@ -75,10 +75,10 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
    if [[ -z ${MAX_CPU} ]];
    then
       echo "using default max cpu"
-      cat deploy1.json | jq '.spec.template.spec.containers.resources.limits.cpu="'${DEFAULT_MAX_CPU}'"' > deploy2.json
+      cat deploy.json | jq '.spec.template.spec.containers.resources.limits.cpu="'${DEFAULT_MAX_CPU}'"' > deploy2.json
    else
       echo "setting max cpu: ${MAX_CPU}"
-      cat deploy1.json | jq '.spec.template.spec.containers.resources.limits.cpu="'${MAX_CPU}'"' > deploy2.json
+      cat deploy.json | jq '.spec.template.spec.containers.resources.limits.cpu="'${MAX_CPU}'"' > deploy2.json
    fi
 
    if [[ -z ${MAX_MEMORY} ]];
@@ -199,10 +199,10 @@ else
    if [[ -z ${MAX_CPU} ]];
    then
       echo "using default max cpu"
-      cat deploy1.json | jq '.spec.pod.containers.runtime.resources.limits.cpu="'${DEFAULT_MAX_CPU}'"' > deploy2.json
+      cat deploy.json | jq '.spec.pod.containers.runtime.resources.limits.cpu="'${DEFAULT_MAX_CPU}'"' > deploy2.json
    else
       echo "setting max cpu: ${MAX_CPU}"
-      cat deploy1.json | jq '.spec.pod.containers.runtime.resources.limits.cpu="'${MAX_CPU}'"' > deploy2.json
+      cat deploy.json | jq '.spec.pod.containers.runtime.resources.limits.cpu="'${MAX_CPU}'"' > deploy2.json
    fi
 
    if [[ -z ${MAX_MEMORY} ]];
@@ -243,15 +243,6 @@ else
 
    cat deploy6.json |  jq '.metadata.name = "'${NAMESPACE}'-'${IDS_PROJECT_NAME}'" | .metadata.namespace = "'${NAMESPACE}'" | .spec.pod.containers.runtime.image="'${PIPELINE_IMAGE_URL}'" | .spec.replicas='${REPLICAS}'' > deploy7.json
 
-   if [[ -z ${SERVER_CONF} ]];
-   then
-      echo "no server-conf configuration added"
-      cp  deploy.json deploy1.json
-   else
-      echo "adding server-conf: ${SERVER_CONF}"
-      cat deploy.json | jq '.spec.configurations += ["'${SERVER_CONF}'"]' > deploy1.json
-   fi
-
    if [[ -z ${POLICY_CONF} ]];
    then
       echo "no policy configuration applied"
@@ -279,12 +270,20 @@ else
       cat deploy9.json | jq '.spec.configurations += ["'${GENERIC_CONF}'"]' > deploy10.json
    fi
 
+   if [[ -z ${SERVER_CONF} ]];
+   then
+      echo "no server-conf configuration added"
+      cp  deploy10.json deploy11.json
+   else
+      echo "adding server-conf: ${SERVER_CONF}"
+      cat deploy10.json | jq '.spec.configurations += ["'${SERVER_CONF}'"]' > deploy11.json
+   fi
    echo "*** begin: modified json to deploy ***"
-   cat deploy10.json
+   cat deploy11.json
    echo "*** end: modified json to deploy ***"
 
    echo "DEPLOYING..."
-   oc apply -f deploy10.json 
+   oc apply -f deploy11.json 
 
    echo "$(date) - waiting for deploy to take"
    sleep 15s
