@@ -192,7 +192,7 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
    echo "$(date): DEPLOYMENT COMPLETED - Check Pod is running in namespace ${NAMESPACE}"
    exit 0
 else
-   echo "$(date): Deployment for integration server does not exist. Deploying and the modifying deployment and replacing..."
+   echo "$(date): Deployment for integration server does not exist. Deploying and then modifying deployment and replacing..."
 
    if [[ -z ${MAX_CPU} ]];
    then
@@ -277,16 +277,15 @@ else
       cat deploy-1.json | jq '.spec.configurations += ["'${SERVER_CONF}'"]' > deploy.json
    fi
    
-   echo "*** begin: modified json to deploy ***"
+   echo "$(date): Modified json to deploy"
    cat deploy.json
-   echo "*** end: modified json to deploy ***"
-
+   
    echo "$(date): Deploying..."
    oc apply -f deploy.json 
 
-   echo "$(date) - waiting for deploy to take"
+   echo "$(date): waiting for deploy to take"
    sleep 15s
-   echo "$(date) - now watching deployment "
+   echo "$(date): now watching deployment "
 
    if oc rollout status deploy/${DEPLOYMENT_NAME} --watch=true --request-timeout="1800s" --namespace ${NAMESPACE}; 
    then
@@ -295,7 +294,7 @@ else
       STATUS="fail"
    fi
 
-   echo "$(date) - watch has completed"
+   echo "$(date): watch has completed"
 
    if [ "$STATUS" == "fail" ]; 
    then
@@ -313,13 +312,13 @@ else
          echo "$(date): No varlog mount/claim found in deployment" 
          if [[ -z ${MATCH_SELECTOR} ]];
          then
-            echo "$(date): No Match Selector Specified.  Enabling metrics and setting log4j PVC..."
+            echo "$(date): No Match Selector Specified.  Enabling metrics and setting log4j volume and claim"
 	        cat deployed.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deployed-1.json
             cat deployed-1.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deployed.json
             cat deployed.json | jq '.spec.template.spec.containers[0].env[1].value="true"' >deployed-1.json
 			mv deploy-1.json deploy.json
          else
-            echo "$(date): Updating Match Selectors and enabling metrics and setting log4j PVC..."
+            echo "$(date): Updating Match Selectors and enabling metrics and setting log4j volume and claim"
             cat deployed.json  | jq '.spec.template.spec.containers[0].env[1].value="true" | .spec.selector.matchLabels.'${MATCH_SELECTOR}'="true" | .metadata.labels.'${MATCH_SELECTOR}'="true" | .spec.template.metadata.labels.'${MATCH_SELECTOR}'="true"' >deployed-1.json
 	        cat deployed-1.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deployed.json
             cat deployed.json | jq '.spec.template.spec.volumes += [{"name": "varlog", "persistentVolumeClaim": { "claimName": "logs-log4j"} }]' >deployed-1.json
