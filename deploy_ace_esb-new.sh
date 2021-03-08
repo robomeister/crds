@@ -111,10 +111,8 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
    if [[ -z ${WORKER_NODE} ]];
    then
       echo "not setting worker node selector"
-      cp  deploy.json deploy.json
    else
       echo "setting worker node selector: ${WORKER_NODE}"
-	  
 	  cat deploy.json | jq -r 'del( .spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[] | select(.key == "workernode")  )' >deploy-no-worker.json
       cat deploy-no-worker.json | jq '.spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions += [{"key":"workernode","operator":"In", "values":["'${WORKER_NODE}'"]}]' > deploy.json
    fi
