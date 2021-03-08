@@ -163,6 +163,7 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
    if [[ $(cat deploy8.json | jq -r '.spec.template.spec.containers[0].env[] | select(.name=="ACE_ENABLE_METRICS") | .value') == "true" ]];
    then
       echo "Mertics already enabled"
+	  cp deploy8.json deploy9.json 
    else
       echo "Enabling metrics"
       cat deploy8.json | jq -r 'del( .spec.template.spec.containers[0].env[] | select(.name == "ACE_ENABLE_METRICS")  )' >deploy8-no-metrics.json
