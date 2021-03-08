@@ -1,0 +1,81 @@
+{
+    "apiVersion": "appconnect.ibm.com/v1beta1",
+    "kind": "IntegrationServer",
+    "metadata": {
+         "name": "name",
+        "namespace": "namespace"
+    },
+    "spec": {
+        "adminServerSecure" : false,
+        "barURL": "",
+        "configurations": [
+            "setdbparms-conf",
+            "generic-conf",
+            "policies-conf",
+            "sask-health-keystore.jks",
+            "truststore.jks",
+            "aceclient.kdb",
+            "aceclient.sth",
+            "odbc.ini"
+        ],
+        "designerFlowsOperationMode": "disabled",
+		"disableRoutes" : true,
+        "license": {
+            "accept": true,
+            "license": "L-APEH-BSVCHU",
+            "use": "AppConnectEnterpriseProduction"
+        },
+        "pod": {
+            "containers": {
+                "runtime": {
+                    "livenessProbe" : {
+                        "initialDelaySeconds": 1200
+                    },
+                    "image": "image",
+                    "resources": {
+                        "limits": {
+                            "cpu": "4000m",
+                            "memory": "4096Mi"
+                        },
+                        "requests": {
+                            "cpu": "1000m",
+                            "memory": "1024Mi"
+                        }
+                    }
+                }				
+            },
+            "imagePullSecrets": [
+                {
+                    "name": "all-icr-io"
+                }
+            ]
+        },
+        "replicas": 1,
+        "router": {
+            "timeout": "120s"
+        },
+		"service": {
+            "endpointType": "https",
+             "ports": [
+                {
+                    "name": "tcpin-1",
+                    "port": 7001,
+                    "protocol": "TCP",
+                    "targetPort": 7001
+                },
+				{
+                    "name": "tcpin-2",
+                    "port": 7025,
+                    "protocol": "TCP",
+                    "targetPort": 7025
+                }
+            ],
+            "type": "ClusterIP"
+        },
+        "tracing": {
+            "enabled": false
+        },
+        "useCommonServices": false,
+        "version": "11.0.0.11-r1"		
+    }
+}
