@@ -1,8 +1,11 @@
 #!/bin/bash
 
+echo "$(date): $0 starting..."
+
+# check for required anv vars
 if [[ -z ${NAMESPACE} ]];
 then
-   echo "$(date): Please set the NAMESPACE environment variable"
+   echo "$(date): NAMESPACE environment variable is required."
    exit 1
 fi
 
@@ -11,10 +14,13 @@ then
    REPLICAS=1
 fi
 
+#set deployment name
 DEPLOYMENT_NAME=${NAMESPACE}-${IDS_PROJECT_NAME}-is
 
+#set base configurations - this should match configurations in json file 
 BASE_ACE_CONFIGURATIONS="truststore.jks,aceclient.kdb,aceclient.sth,odbc.ini"
 
+#set default memory and cpu 
 case $NAMESPACE in
   *"pt"*|*"prod"*|*"dr"*)
     echo "$(date): Setting PRODUCTION default memory and cpu"
@@ -32,8 +38,10 @@ case $NAMESPACE in
     ;;    
 esac
 
-rm deploy-ace-esb.json
+#clean up old files
+rm deploy-ace-esb.json deploy.json deploy-1.json
 
+#check if deployment already exists
 oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME}
 
 if oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME}; then
@@ -47,13 +55,14 @@ else
    wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-esb.json
 fi
 
+#set initial deploy file
 cp deploy-ace-esb.json deploy.json
 
-echo "$(date): Initial json before changes"
+echo "$(date): Initial deployment json before changes"
 cat deploy.json
 
 if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
-   echo "$(date): Deployment for integration server exists. Modify deployment and replacing..."
+   echo "$(date): Deployment for integration server exists. Modifying deployment and replacing..."
    
    if [[ -z ${MAX_CPU} ]];
    then
