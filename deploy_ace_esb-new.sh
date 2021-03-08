@@ -42,22 +42,6 @@ if oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME}; then
    echo "Deployment ${DEPLOYMENT_NAME} already exists - will modify deployment" 
    DEPLOYMENT_EXISTS="true"
    oc -n ${NAMESPACE} get deployment ${DEPLOYMENT_NAME} -o json >deploy-ace-esb.json
-   if [[ $(cat deployed.json|grep varlog|wc -l) -eq 0 ]];
-   then
-      echo "No varlog mount/claim found in deployment" 
-	  PVC_NEEDED = "true";
-   else	 
-      echo "varlog mount/claim found in deployment" 
-	  PVC_NEEDED = "false";
-   fi	  
-   if [[ $(cat deployed.json|grep workernode|wc -l) -eq 0 ]];
-   then
-      echo "No worker node affinity found in deployment" 
-	  WORKER_NEEDED = "true";
-   else	 
-      echo "Worker node affinity found in deployment" 
-	  WORKER_NEEDED = "true";
-   fi	  
 else
    echo "Deployment ${DEPLOYMENT_NAME} does not exist - will deploy and then modify deployment"
    DEPLOYMENT_EXISTS="false"
@@ -66,6 +50,7 @@ else
 fi
 
 cp deploy-ace-esb.json deploy.json
+
 echo "Initial json before changes"
 cat deploy.json
 
