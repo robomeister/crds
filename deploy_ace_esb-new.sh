@@ -169,7 +169,7 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
       cat deploy8-no-metrics | jq '.spec.template.spec.containers[0].env += [{"name": "ACE_ENABLE_METRICS", "value": "true"}]' >deploy9.json
    fi
 
-   if [[ $(cat deployed.json|grep varlog|wc -l) -eq 0 ]];
+   if [[ $(cat deploy9.json|grep varlog|wc -l) -eq 0 ]];
    then
       echo "adding volume mount and claim for log4j"
       cat deploy9.json | jq '.spec.template.spec.containers[0].volumeMounts += [{"mountPath": "/home/aceuser/ace-server/log4j/logs", "name": "varlog"}]' >deploy10.json
