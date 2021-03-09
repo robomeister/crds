@@ -38,7 +38,7 @@
                             "memory": "256Mi"
                         }
                     },
-					"volumeMounts": [
+                    "volumeMounts": [
                         {
                             "mountPath": "/home/aceuser/ace-server/log4j/logs",
                             "name": "varlog"
