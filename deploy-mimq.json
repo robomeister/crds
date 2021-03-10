@@ -13,10 +13,10 @@
                         "preference": {
                             "matchExpressions": [
                                 {
-                                    "key": "qmworkernode",
+                                    "key": "qm-node",
                                     "operator": "In",
                                     "values": [
-                                        "3"
+                                        "primary"
                                     ]
                                 }
                             ]
@@ -29,11 +29,11 @@
                         {
                             "matchExpressions": [
                                 {
-                                    "key": "qmworkernode",
+                                    "key": "qm-node",
                                     "operator": "In",
                                     "values": [
-                                        "3",
-                                        "2"
+                                        "primary",
+                                        "standby"
                                     ]
                                 }
                             ]
