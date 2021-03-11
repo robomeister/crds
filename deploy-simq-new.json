@@ -42,7 +42,15 @@
                     "size": "40Gi",
                     "type": "persistent-claim"
                 }
-            }		
+            },
+			"volumes": [
+			    {
+			        "name": "mqsslkeyr",
+			    	"secret": {
+				        "secretName": "mq-mqsslkeyr-secret"
+				    }
+			    }
+	        ]		
         },
         "template": {
             "pod": {
@@ -54,7 +62,15 @@
                                 "value": "yes"
                             }
                         ],
-                        "name": "qmgr"
+                        "name": "qmgr",
+						"volumeMounts": [
+						    {
+							     "name": "mqsslkeyr",
+                                 "readOnly": true,
+								 "mountPath": "/home/mqm/keystore"
+								 
+							}
+						]
                     }
                 ]
             }
