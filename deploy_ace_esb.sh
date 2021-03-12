@@ -41,9 +41,10 @@ esac
 #clean up old files
 rm deploy-ace-esb.json deploy.json deploy-1.json
 
-echo "$(date): Deploying ${DEPLOYMENT_NAME}
-echo "$(date): Getting base json file from repro..."
-wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-esb.json
+   echo "$(date): Deploying ${DEPLOYMENT_NAME}..."
+   DEPLOYMENT_EXISTS="false"
+   echo "$(date): Getting base json file from repro..."
+   wget https://raw.githubusercontent.com/robomeister/crds/master/deploy-ace-esb.json
 
 #set initial deploy file
 cp deploy-ace-esb.json deploy.json
@@ -51,7 +52,7 @@ cp deploy-ace-esb.json deploy.json
 echo "$(date): Initial deployment json before changes"
 cat deploy.json
 
-echo "$(date): Deploying and then modifying deployment and replacing..."
+   echo "$(date): Deploying and then modifying deployment and replacing..."
 
    if [[ -z ${MAX_CPU} ]];
    then
@@ -200,5 +201,5 @@ echo "$(date): Deploying and then modifying deployment and replacing..."
       fi   
       exit 0
    fi
- 
+  
    
