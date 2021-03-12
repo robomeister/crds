@@ -109,6 +109,7 @@ if [ "$DEPLOYMENT_EXISTS" == "true" ]; then
       cat deploy.json | jq '.spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions += [{"key":"workernode","operator":"In", "values":["'${WORKER_NODE}'"]}]' > deploy-1.json
    fi
 
+   echo "$(date): Deploying image: ${PIPELINE_IMAGE_URL}"
    cat deploy-1.json |  jq '.spec.template.spec.containers[0].image="'${PIPELINE_IMAGE_URL}'" | .spec.replicas='${REPLICAS}'' > deploy.json
    
    if [[ -z ${SERVER_CONF} ]];
